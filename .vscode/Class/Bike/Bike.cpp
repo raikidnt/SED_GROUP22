@@ -27,3 +27,7 @@ void Bike::showInfo(){
       std::cout << "Location: Unknown" << std::endl;
    }
 }
+
+void Bike::list(){
+   
+}
