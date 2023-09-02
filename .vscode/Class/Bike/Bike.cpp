@@ -28,6 +28,6 @@ void Bike::showInfo(){
    }
 }
 
-void Bike::list(){
+// void Bike::list(){
    
-}
+// }
