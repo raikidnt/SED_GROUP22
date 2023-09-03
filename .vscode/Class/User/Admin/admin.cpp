@@ -1,10 +1,10 @@
-#include "admin.h"
+#include "Admin.h"
 #include <string>
 #include <iostream>
 
 Admin::Admin(){}; // default constructor
 
-int Admin::login() {
+bool Admin::login(){
    std::string username;
    std::string password;
    std::cout << "Enter admin username: " << std::endl;
@@ -17,4 +17,4 @@ int Admin::login() {
    } else {
       return 1;
    }
-}
+};
