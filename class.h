@@ -11,7 +11,3 @@ class User {
 class Motobike {
    
 };
-
-class Admin{
-
-};
