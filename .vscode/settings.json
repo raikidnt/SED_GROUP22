@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
    "files.associations": {
       "array": "cpp",
@@ -48,3 +49,5 @@
    },
    "C_Cpp.errorSquiggles": "enabled"
 }
+=======
+>>>>>>> bd2e7343e66fbd69c2aa9d7e811667b8970c8c05

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include "Admin.h"
 
 Admin::Admin(){}; // default constructor
@@ -16,3 +17,11 @@ bool Admin::login(){
       return 1;
    }
 };
+=======
+#include <bits/stdc++.h>
+using namespace std;
+
+class Admin: public User {
+
+};
+>>>>>>> bd2e7343e66fbd69c2aa9d7e811667b8970c8c05
