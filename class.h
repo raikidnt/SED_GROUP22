@@ -9,5 +9,8 @@ class User {
 };
 
 class Motobike {
-   
+   private:
+      int rating = 3;
+   public:
+      int get_rating(){return rating;};
 };

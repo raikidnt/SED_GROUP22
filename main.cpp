@@ -1,18 +1,21 @@
+// #include "./Admin.h"
+#include "./Admin.cpp"
+
 #include <iostream>
 #include <fstream>
-#include ".vscode/Class/User/Admin/Admin.h"
+// #include "class.h"
+// #include <Admin.h>
+
 #include ".vscode/Class/Server/Ui/UI.cpp"
 using namespace std;
 int main(int argc, char *argv[]) {
-   welcome();
+   // welcome();
+   // int user = user_choice();
+   // menu(user);
    Admin ad;
    ad.login();
-   if(ad.login()) {
-      cout << "Welcome Admin!" << endl;
-   } 
-   else {
-      cout << "Login failed!" << endl;
-   }
-
+   // Motobike bike1;
+   // int i =   bike1.get_rating();
+   // cout << i << endl;
    return 0;
 }
