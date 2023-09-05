@@ -1,4 +1,7 @@
+#ifndef CLASS
+#define CLASS
 #include <string>
+
 class User {
    private:
       std::string username;
@@ -12,5 +15,7 @@ class Motobike {
    private:
       int rating = 3;
    public:
-      int get_rating(){return rating;};
+      int get_rating();
 };
+
+#endif   //CLASS

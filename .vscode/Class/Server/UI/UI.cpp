@@ -1,3 +1,4 @@
+#include "UI.h"
 #include <iostream>
 void welcome (){
    std::cout << "====== EEET2482/COSC2082 ASSIGNMENT ======" << "\n";

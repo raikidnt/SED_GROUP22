@@ -1,5 +1,6 @@
 #include "Admin.h"
-
+#include ".vscode\Class\User\Admin\Admin.h"
+#incldue <string>
 Admin::Admin(){}; // default constructor
 
 bool Admin::login(){
