@@ -14,12 +14,12 @@
 #include "C:\Users\nhatn\OneDrive\Documents\GitHub\SED_GROUP22\.vscode\Class\Server\UI\UI.h"
 using namespace std;
 int main(int argc, char *argv[]) {
-   welcome();
-   int user = user_choice();
-   menu(user);
+   // welcome();
+   // int user = user_choice();
+   // menu(user);
    
-   // Admin ad;
-   // ad.login();
+   Admin ad;
+   ad.login();
    // Motobike bike1;
    // int i =   bike1.get_rating();
    // cout << i << endl;
