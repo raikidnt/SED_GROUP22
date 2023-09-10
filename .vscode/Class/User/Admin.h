@@ -14,9 +14,7 @@ class Admin :public User{
       bool logout();
       void viewAllMembers();  //view all member in the system
       void viewAllMotorBikes();   //view all motorbike in the system
-      
-
 };
 
 
-#endif
+#endif //ADMIN_H

@@ -1,7 +1,6 @@
 #ifndef MOTORBIKE_H
 #define MOTORBIKE_H
 #include <bits/stdc++.h>
-#include ".vscode\Class\User\Admin.h"
 class MotorBike {
    private: 
       std::string bikeID;  //specification of a bike 
