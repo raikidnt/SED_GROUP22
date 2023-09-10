@@ -1,19 +1,21 @@
-#pragma once
-#ifndef ADMIN
-#define ADMIN
-#include <string>
-#include <iostream>
-// #include "Admin.cpp"
-class Admin {
+// #pragma once
+#ifndef ADMIN_H
+#define ADMIN_H
+#include <bits/stdc++.h>
+#include "User.h"
+class Admin :public User{
    private:
       std::string admin_username = "admin";
       std::string admin_password = "123abc";
    public:
-      Admin();
+      Admin(); //default constructor
+
       bool login(std::string username, std::string password);
-      void logout();
+      bool logout();
       void viewAllMembers();  //view all member in the system
-      void viewAllMotorBike();   //view all motorbike in the system
+      void viewAllMotorBikes();   //view all motorbike in the system
+      
+
 };
 
 

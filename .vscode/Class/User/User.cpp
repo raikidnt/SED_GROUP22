@@ -17,6 +17,6 @@ int User::UserLogin(std::string n, std::string p){
       return 0;
    }
 }
-int User::UserLogout (){
-   
-}
+// int User::UserLogout (){
+
+// }

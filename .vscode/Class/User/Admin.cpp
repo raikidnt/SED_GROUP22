@@ -1,7 +1,4 @@
 #include "Admin.h"
-
-// #include ".vscode\Class\User\Admin\Admin.h"
-#include <string>
 Admin::Admin(){}; // default constructor
 
 bool Admin::login(std::string username, std::string password){
@@ -17,6 +14,13 @@ bool Admin::login(std::string username, std::string password){
    }
 };
 
-void logout (){
+bool Admin::logout (){
+   return false;
+}
 
+void Admin::viewAllMembers(){
+   return;
+}
+void Admin::viewAllMotorBikes(){
+   return;
 }

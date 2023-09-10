@@ -1,34 +1,10 @@
-// #include "C:\Users\nhatn\OneDrive\Documents\GitHub\SED_GROUP22\.vscode\Class\User\Admin\Admin.h"
-// #include ".vscode\Class\User\Admin\Admin.h"
-#include ".vscode\Class\User\Admin.cpp"
-
-// #include "Admin.h"
-// #include <./Admin.h>
-
 #include <iostream>
 #include <fstream>
-// #include "class.h"
-// #include <Admin.h>
-
-// #include ".vscode/Class/Server/Ui/UI.cpp"
-// #include "UI.cpp"
-// #include <.vscode/Class/Server/UI/UI.h>
-#include "C:\Users\nhatn\OneDrive\Documents\GitHub\SED_GROUP22\.vscode\Class\Server\UI\UI.h"
+#include ".vscode\Class\User\Member.cpp"
 using namespace std;
-int main() {
-// int main(int argc, char *argv[]) {
-   // welcome();
-   // int user = user_choice();
-   // menu(user);
-   
-   Admin ad;
-   std::string username;
-   std::string password;
-   ad.login(username, password);
+int main(int argc, char *argv[]) {
+   Member mb1("Nhat Nguyen", 865608476, CCCD, 00112233,"9959334",  "30/12/2023", 10);
+   mb1.showInfo_M();
 
-
-   // Motobike bike1;
-   // int i =   bike1.get_rating();
-   // cout << i << endl;
    return 0;
 }

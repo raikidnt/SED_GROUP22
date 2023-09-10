@@ -10,7 +10,7 @@ class User{
         User ();
         User (std::string n,std::string p);
         int UserLogin(std::string name, std::string pass);
-        int UserLogout();
+        // int UserLogout();
 
     
 
