@@ -1,14 +1,19 @@
 #ifndef USER_H
 #define USER_H
 #include <bits/stdc++.h>
-using namespace std;
 
 class User{
+    private:
+        std::string userName;
+        std::string password;
     public:
-    string userName;
-    string password;
-    string phonenumber;
+        User ();
+        User (std::string n,std::string p);
+        int UserLogin(std::string name, std::string pass);
+        int UserLogout();
+
     
+
 };
 
-#endif
+#endif // USER_H

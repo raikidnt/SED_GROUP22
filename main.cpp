@@ -1,6 +1,6 @@
 // #include "C:\Users\nhatn\OneDrive\Documents\GitHub\SED_GROUP22\.vscode\Class\User\Admin\Admin.h"
 // #include ".vscode\Class\User\Admin\Admin.h"
-#include ".vscode\Class\User\Admin\Admin.cpp"
+#include ".vscode\Class\User\Admin.cpp"
 
 // #include "Admin.h"
 // #include <./Admin.h>
