@@ -11,9 +11,6 @@ class User{
         User (std::string n,std::string p);
         int UserLogin(std::string name, std::string pass);
         // int UserLogout();
-
-    
-
 };
 
 #endif // USER_H

@@ -12,7 +12,7 @@ void MotorBike::showBikeInfo(std::string i_bikeID){
    std::cout << "Year Made: " << yearMade << std::endl;
    std::cout << "Credit Cost: " << creditCost << std::endl;
    
-   if (mode == 1) {
+   if (mode == 1) { 
       std::cout << "Mode: Automation" << std::endl;
    } else if (mode == 2) {
       std::cout << "Mode: Manual" << std::endl;

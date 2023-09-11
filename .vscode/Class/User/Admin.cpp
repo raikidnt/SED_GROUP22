@@ -19,6 +19,7 @@ bool Admin::logout (){
 }
 
 void Admin::viewAllMembers(){
+   
    return;
 }
 void Admin::viewAllMotorBikes(){

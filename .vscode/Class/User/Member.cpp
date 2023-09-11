@@ -1,14 +1,14 @@
 #include "Member.h"  
 #include <bits/stdc++.h>
-#include "User.cpp"  //include parent cpp files
-
+// #include "User.cpp"  //include parent cpp files
+// #include ".vscode\Class\Bike\MotorBike.cpp"  //include cpp file of bike class
 Member::Member(){};  //default constructor
 Member::Member(std::string i_fullName, int i_phoneNumber,
                IDTYPE i_idType, int i_IDNum, std::string i_licenseID,
                std::string i_liscenceExpDate, int i_credits){
    fullName = i_fullName;
    phoneNumber = i_phoneNumber;
-   id = i_idType;
+   id_type = i_idType;
    IDNum = i_IDNum;
    LicenseID = i_licenseID;
    expDate = i_liscenceExpDate;
@@ -42,6 +42,6 @@ void Member::showInfo_M(){
    //    std::cout << "Bike not found!" << std::endl;
    // }
 }
-int Member::addBike(MotorBike &bike){
-   
+int Member::addBike(MotorBike &bike) {
+   this->bikeID = bike.bikeID;
 }

@@ -14,9 +14,9 @@ class MotorBike {
       int yearMade;
       int creditCost; //credit need to rent the motorbike
 
-      enum {unknown, automation, manual} mode;
+      enum Mode {unknown, automation, manual} mode;
       std::string description;
-      enum {SG = 1, HN = 2} location;
+      enum Location{SG = 1, HN = 2} location;
 
       MotorBike();
       MotorBike(std::string i_model,std::string i_color,int i_engineSize, int i_year, int cost);
@@ -25,5 +25,6 @@ class MotorBike {
       void showBikeInfo(std::string i_bikeID);  //show info of bike that match ID
       
       friend class Admin;
+      friend class Member;
 }; 
 #endif   // BIKE_H
