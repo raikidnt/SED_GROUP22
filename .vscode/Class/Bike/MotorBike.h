@@ -1,6 +1,9 @@
 #ifndef MOTORBIKE_H
 #define MOTORBIKE_H
 #include <bits/stdc++.h>
+enum MODE {unknown, automation, manual};
+enum LOCATION{SG = 1, HN = 2};
+      
 class MotorBike {
    private: 
       std::string bikeID;  //specification of a bike 
@@ -13,16 +16,19 @@ class MotorBike {
       int engineSize; // size of engine (unit cc)
       int yearMade;
       int creditCost; //credit need to rent the motorbike
-
-      enum Mode {unknown, automation, manual} mode;
+      MODE mode;
+      LOCATION location;
       std::string description;
-      enum Location{SG = 1, HN = 2} location;
+      
+      MotorBike();   //default constructor
+      MotorBike(std::string i_model, std::string i_color, MODE i_mode, int i_engineSize, int i_year, int cost);
 
-      MotorBike();
-      MotorBike(std::string i_model,std::string i_color,int i_engineSize, int i_year, int cost);
-
-      int loadBikeInfo();
-      void showBikeInfo(std::string i_bikeID);  //show info of bike that match ID
+      void showBikeInfo();
+      
+      
+      friend int loadBikeInfo(std::string ID);
+   
+      friend std::string bikeIDgenerate();
       
       friend class Admin;
       friend class Member;

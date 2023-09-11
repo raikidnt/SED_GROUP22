@@ -1,29 +1,33 @@
 #ifndef MEMBER_H
 #define MEMBER_H
+
+#include "User.h"
+#include "../Bike/MotorBike.h"
+
 #include <bits/stdc++.h>
-// #include ".vscode\Class\User\User.h"
-// #include ".vscode\Class\Bike\MotorBike.h"
+
 enum IDTYPE {CCCD, CMND, PASSPORT};
+
 class Member : public User {
 private:
    std::string memberID;   //auto-generated
-   int phoneNumber;
+   int phoneNumber;  
    IDTYPE id_type;
    int IDNum;
-   std::string LicenseID;
-   std::string expDate;
    int credits;
    bool own_bike;
    std::string bikeID;  //remember bike by its ID
 
 public:
    std::string fullName;
-   int rating;
+   float rating;
+   std::string licenseID;
+   std::string expDate;
 
    Member();
    Member(std::string i_fullName, int i_phoneNumber,
-          IDTYPE i_idType, int i_IDNum, std::string i_licenseID,
-          std::string i_liscenceExpDate, int i_credits);
+          IDTYPE i_id_type, int i_IDNum, std::string i_licenseID,
+          std::string i_expDate, float i_rating, int i_credits);
    // int MemberLogin();
    // int MemberLogout();
    
@@ -33,7 +37,7 @@ public:
    // void rentMotorBikes();
    // int topUp(); // add addtional money to current account
    int addBike(MotorBike &bikes);
-
+   // int searchBike(std::string bikeID);
    // void listBike();   // list bike to be available
    // void unlistBike(); // remove bike from list
 
