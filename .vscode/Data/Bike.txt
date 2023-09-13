@@ -1,0 +1,13 @@
+<ID>|<model>|<color>|<enginesize>|<yearMade>|<transmission_mode>|<CreditCost>|<city>|<Bikerating>|<minMemberRating>|<description>
+Bk-1|Futures   |Black   |125|2021   |Manual|10  |HN|9|6|description1
+Bk-2|Vision    |Black   |125|2019   |Manual|6   |HN|9|6|description2
+Bk-3|AirBlade  |Blue    |150|2022   |Manual|5   |SG|9|6|description3
+Bk-4|Harley    |Pink    |1200|2022  |Manual|8   |HN|9|6|description4
+Bk-5|Lead      |Red     |125|2022   |Manual|11  |HN|9|6|description5
+Bk-6|SH        |Black   |350|2022   |Manual|9   |HN|9|6|description6
+Bk-7|Banigale  |Black   |998|2022   |Manual|18  |SG|9|6|description7
+Bk-8|Monster   |Purple  |821|2022   |Manual|10  |HN|9|6|description8
+Bk-9|Ninja     |Black   |1000|2015  |Manual|8   |SG|9|6|description9
+Bk-10|Neo      |Green   |125|2022   |Manual|9   |SG|9|6|description10
+Bk-11|Hayabusa |Black   |1300|2022  |Manual|12  |HN|9|6|description11
+Bk-12|Triump   |Blue    |2600|2022  |Manual|15  |SG|9|6|description12

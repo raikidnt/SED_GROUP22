@@ -1,5 +1,7 @@
 #include "UI.h"
 #include <iostream>
+#include "../Bike/MotorBike.cpp"
+
 void welcome (){
    std::cout << "====== EEET2482/COSC2082 ASSIGNMENT ======" << "\n";
    std::cout << "====== MOTORBIKE RENTAL APPLICATION ======" << "\n";
@@ -51,4 +53,49 @@ int menu (int choice){ //choice for each type of user
          break;
    }
    return menu_choice;
+}
+
+std::vector<MotorBike> initialize (std::vector <MotorBike> &motorBikes){
+   std::fstream bikeFile;
+   bikeFile.open("../Data/Bike.txt", ios:: in);
+   if(!bikeFile){
+      cerr << "couldnt open file" << std::endl;
+      return;
+   }
+   MotorBike temp;
+
+   std::string blank;
+   while (!bikeFile.eof()){
+      
+      getline(bikeFile,blank,'|');  //ID
+      getline(bikeFile,temp.model,'|');   //model
+      getline(bikeFile,temp.color,'|');   //color
+      
+      getline(bikeFile,blank,'|');  //engine size
+      temp.engineSize = stoi(blank);
+
+      getline(bikeFile,blank,'|');  //yearMade
+      temp.yearMade = stoi(blank);
+
+      //transmission mode::need
+
+
+      getline(bikeFile,blank,'|'); //cost
+      temp.pdPrice = stoi(blank);
+
+      // getline(bikeFile,blank,'|');  //location
+      // temp.location = stoi(blank);
+
+      //Bikerating::need
+
+      getline(bikeFile,blank,'|');  //min mem rating
+      temp.minRating = stof(blank);
+      
+      getline(bikeFile,temp.description,'|');   //description
+      
+
+      
+      motorBikes.push_back(temp);
+   }
+
 }

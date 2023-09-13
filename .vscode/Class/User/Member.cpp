@@ -26,16 +26,16 @@ void Member::showInfo_M(){
    }
    std::cout << "\tID#: " << IDNum << std::endl;
    std::cout << "- DRV-License#: " << licenseID << "\t ExpDate: " << expDate << std::endl;
-   std::cout << "- Rating: " << rating << "\tCredits: " << credits << std::endl;
+   std::cout << "- Rating: " << avgMemberRating << "\tCredits: " << credits << std::endl;
    std::cout << "================================================================" << std::endl;
-   if (own_bike) {   //check if owner have motorBike
-      // MotorBike::showBikeInfo(bikeID);
-      // MotorBike a;
-      // a.showBikeInfo(bikeID);
-      std::cout << "Own bikes: " << std::endl;
-   } else {
-      std::cout << "Bike not found!" << std::endl;
-   }
+   // if (own_bike) {   //check if owner have motorBike
+   //    // MotorBike::showBikeInfo(bikeID);
+   //    // MotorBike a;
+   //    // a.showBikeInfo(bikeID);
+   //    std::cout << "Own bikes: " << std::endl;
+   // } else {
+   //    std::cout << "Bike not found!" << std::endl;
+   // }
 }
 // int Member::MemberLogin(std::string usename, std::string password) {
    // User::UserLogin(username,password);

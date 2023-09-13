@@ -13,7 +13,9 @@ int main(int argc, char *argv[]) {
    
    // mb1.Login("haro", "123");
    // mk1.showBikeInfo();
-   // vector <MotorBike> bike;
-   // vector <Member> members;
+   vector <Member> members;
+   vector <MotorBike> bike;
+   
+   // intiallise(&)
    return 0;
 }
