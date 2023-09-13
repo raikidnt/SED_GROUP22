@@ -1,1 +1,12 @@
-Bk-1234, Futures, Black, 125, 2022, 9.6, 10
+Bk-1|Futures|Black|125|2021|3
+Bk-2|Vision|Black|125|2019|6
+Bk-3|AirBlade|Black|150|2022|5
+Bk-4|Harley Davison|Black|1200|2022|8
+Bk-5|Lead|Black|125|2022|11
+Bk-6|SH|Black|350|2022|9
+Bk-7|Banigale|Black|998|2022|18
+Bk-8|Monster|Black|821|2022|10
+Bk-9|Ninja|Black|1000|2015|8
+Bk-10|Futures Neo|Black|125|2022|9
+Bk-11|Hayabusa|Black|1300|2022|12
+Bk-1234|Triump|Blue|2600|2022|15

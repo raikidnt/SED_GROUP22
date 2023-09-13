@@ -3,7 +3,6 @@
 
 #include "User.h"
 #include "../Bike/MotorBike.h"
-
 #include <bits/stdc++.h>
 
 enum IDTYPE {CCCD, CMND, PASSPORT};
@@ -17,7 +16,7 @@ private:
    int credits;
    bool own_bike;
    std::string bikeID;  //remember bike by its ID
-
+   std::vector <float> avgMemberRating;
 public:
    std::string fullName;
    float rating;
@@ -27,15 +26,15 @@ public:
    Member();
    Member(std::string i_fullName, int i_phoneNumber,
           IDTYPE i_id_type, int i_IDNum, std::string i_licenseID,
-          std::string i_expDate, float i_rating, int i_credits);
-   // int MemberLogin();
+          std::string i_expDate, int i_credits);
+   // int MemberLogin(std::string username, std::string password);
    // int MemberLogout();
    
    void showInfo_M();
 
    // void viewMotorBikes();
    // void rentMotorBikes();
-   // int topUp(); // add addtional money to current account
+   int topUp(); // add addtional money to current account
    int addBike(MotorBike &bikes);
    // int searchBike(std::string bikeID);
    // void listBike();   // list bike to be available

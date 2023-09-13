@@ -7,7 +7,7 @@ User::User (std::string n,std::string p){
    password = p;
 }
 
-int User::UserLogin(std::string n, std::string p){
+int User::Login(std::string n, std::string p){
    if (n == userName && p == password){
       std::cout << "Login Successful!" << std::endl;
       return 0;

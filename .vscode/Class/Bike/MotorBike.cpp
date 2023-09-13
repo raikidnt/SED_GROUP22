@@ -7,11 +7,18 @@ std::string bikeIDgenerate(){
 }
 
 MotorBike::MotorBike(){}
-MotorBike::MotorBike(std::string i_model, std::string i_color, MODE i_mode, int i_engineSize, int i_year, int cost)
-    : model(i_model), color(i_color), mode(i_mode), engineSize(i_engineSize), yearMade(i_year), creditCost(cost)
-{
-   bikeID = bikeIDgenerate();
-}
+MotorBike::MotorBike(std::string i_model, std::string i_color, int i_engineSize, MODE i_mode, int i_year, LOCATION i_location)
+:model(i_model), color (i_color),engineSize(i_engineSize), mode(i_mode), yearMade(i_year), location (i_location){};
+
+MotorBike::MotorBike(std::string i_model, std::string i_color, int i_engineSize,
+          MODE i_mode, int i_year, std::string i_description, /*int i_rating,*/
+          LOCATION i_location, STATUS i_status, /*int i_initalPrice,*/ int i_pdPrice,
+          float i_minRating, std::string i_rentDuration)
+          :model(i_model), color(i_color), engineSize(i_engineSize), mode(i_mode), 
+          yearMade(i_year),description(i_description),location(i_location), status(i_status),
+          /*initialPrice(i_initalPrice),*/ pdPrice(i_pdPrice), minRating(i_location), rentDuration(i_rentDuration) {
+            bikeID = bikeIDgenerate(); 
+          };
 
 void MotorBike::showBikeInfo(){
    std::cout << "- Model: " << model << "\tColor: " << color << "\tMode: ";
@@ -43,22 +50,6 @@ void MotorBike::showBikeInfo(){
       std::cout << "-Invalid-" << std::endl;
       break;
    }
-   std::cout << "- Rating: " << "\tCredit Cost: " << creditCost << std::endl;
+   std::cout << "- Rating: " << "\tCredit Cost: " << pdPrice << std::endl;
    std::cout << "- Description: " << description << std::endl;
-}
-
-int loadBikeInfo(std::string ID){
-   std::fstream bikeFile;
-   bikeFile.open("Bike.txt", ios::out);
-   if (!bikeFile.is_open()){
-      cerr << "Error: Couldn't open file " << std::endl;
-      return -1;
-   }
-   std::string temp = "";
-   while (!bikeFile.eof()){
-      getline(bikeFile, temp, ',');
-      if (temp == ID){
-         
-      }
-   }
 }
