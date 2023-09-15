@@ -1,7 +1,10 @@
 #include <bits/stdc++.h>
 #include <string>
-#include ".vscode\Class\User\Member.cpp"
-#include ".vscode\Class\UI\UI.cpp"
+// #include ".vscode\Class\User\Member.cpp"
+// #include ".vscode\Class\UI\UI.cpp"
+#include ".vscode/Class/User/Admin.cpp"   
+#include ".vscode/Class/User/User.cpp"   
+#include <string>
 using namespace std;
 int main(int argc, char *argv[]) {
    // welcome();
@@ -14,8 +17,11 @@ int main(int argc, char *argv[]) {
    // mb1.Login("haro", "123");
    // mk1.showBikeInfo();
 
+   // Admin ad;
+   string user;
+   string pass;
    Admin ad;
-
+   ad.login(user,pass);
 
    return 0;
 }

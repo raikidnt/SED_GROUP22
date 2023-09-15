@@ -1,8 +1,15 @@
 #include "UI.h"
 #include <iostream>
 #include "../Bike/MotorBike.cpp"
+#include "..\User\Member.cpp"
+
+#define BikeFile "../Class/Data/Bike.txt"
+#define MemberFile "../Class/Data/Member.txt"
 
 System::System (){}; //default constructor
+System::~System(){   //destructor
+   // delete memberVector;
+}
 void System::beginUI (){
    std::cout << "====== EEET2482/COSC2082 ASSIGNMENT ======" << "\n";
    std::cout << "====== MOTORBIKE RENTAL APPLICATION ======" << "\n";
@@ -54,4 +61,53 @@ int menu (int choice){ //choice for each type of user
          break;
    }
    return menu_choice;
+}
+std::vector <std::string> splitString(std::string &str, char &delimiter){
+   std::vector <std::string> result;
+   std::istringstream is(str);
+   std::string item;
+   while (std::getline(is,item, delimiter)){
+      result.push_back(item);
+   }
+   return result;
+}  
+
+int System::loadBikes(){
+   std::fstream bikeFile;
+   bikeFile.open(BikeFile, std::ios::in);
+   if (!bikeFile) {
+      std::cerr << "Couldn't open file " <<std::endl;
+      return -1;
+   }
+   std::string dataLine;
+   char delim ='|';
+
+   while(std::getline(bikeFile,dataLine)) {
+      std::vector<std::string> dataList;
+      dataList = splitString (dataLine,delim);
+      MotorBike *bike = new MotorBike();
+      motorBikesVector.push_back(bike);
+   }
+   bikeFile.close();
+   return 0;
+}
+
+int System::loadMembers(){
+   std::fstream memberFile;
+   memberFile.open(MemberFile, std::ios::in);
+   if(!memberFile){
+      std::cerr<< "Couldn't open MemberFile!"<<std::endl;
+      return -1;
+   }
+   std::string line;
+   char delim = '|';
+
+   while (std::getline(memberFile, line)){
+      std::vector<std::string> dataList;
+      dataList = splitString (line,delim);
+      Member *member = new Member();
+      memberVector.push_back(member);
+   }
+   memberFile.close();
+   return 0;   
 }

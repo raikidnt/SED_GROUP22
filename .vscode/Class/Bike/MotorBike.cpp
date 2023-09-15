@@ -1,5 +1,5 @@
-#include <bits/stdc++.h>
 #include "MotorBike.h"
+
 std::string bikeIDgenerate(){
    // srand(time(NULL));
    int num = rand() % 1001; //random number form 0-100
