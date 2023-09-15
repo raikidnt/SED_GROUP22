@@ -1,11 +1,19 @@
 #ifndef UI_H
 #define UI_H
-#include <iostream>
+#include <bits/stdc++.h>
 #include "../Bike/MotorBike.h"
-void welcome ();
+#include "../User/Member.h"
+#include "../User/Admin.h"
+#include <vector>
+// void welcome ();
 int user_choice ();
 int menu (int choice); //choice for each type of user
 
-std::vector<MotorBike> initialize(std::vector <MotorBike> &motorBikes);
+class System {
+   private: 
+   public:
+      System();
+      void beginUI();
 
+};
 #endif   //UI_H
