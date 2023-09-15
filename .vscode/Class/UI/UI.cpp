@@ -75,6 +75,9 @@ std::vector <std::string> splitString(std::string &str, char &delimiter){
 int System::loadBikes(){
    std::fstream bikeFile;
    bikeFile.open(BikeFile, std::ios::in);
+   MODE mode;
+   LOCATION location;
+   STATUS status;
    if (!bikeFile) {
       std::cerr << "Couldn't open file " <<std::endl;
       return -1;
@@ -85,7 +88,22 @@ int System::loadBikes(){
    while(std::getline(bikeFile,dataLine)) {
       std::vector<std::string> dataList;
       dataList = splitString (dataLine,delim);
-      MotorBike *bike = new MotorBike();
+      for (int i = 0; i < dataList.size(); i++) {
+         if(dataList[i] == "unknown") {mode = unknown;}
+         else if(dataList[i] == "automation"){mode = automation;}
+         else if(dataList[i] == "manual"){mode = manual;}
+
+         if(dataList[i] == "SG"){location = SG;}
+         else if(dataList[i] == "HN"){location = HN;}
+
+         if(dataList[i] == "AVAILABLE") {status = AVAILABLE;}
+         else if (dataList[i] == "UNAVAILABLE"){status = UNAVAILABLE;}   
+      }
+      
+      MotorBike *bike = new MotorBike(dataList[1], dataList[2], std::stoi(dataList[3]),
+                                      std::stoi(dataList[4]), mode, std::stoi(dataList[6]),
+                                      location,std::stof(dataList[8]),std::stof(dataList[9]),
+                                      dataList[10],status,dataList[12]); // need attributes
       motorBikesVector.push_back(bike);
    }
    bikeFile.close();
@@ -105,7 +123,15 @@ int System::loadMembers(){
    while (std::getline(memberFile, line)){
       std::vector<std::string> dataList;
       dataList = splitString (line,delim);
-      Member *member = new Member();
+      IDTYPE type;
+      for (int i = 0; i < dataList.size(); i++) {
+         if (dataList[i] == "CITIZEN_ID"){type = CITIZEN_ID;}
+         else if (dataList[i] == "PASSPORT"){type = PASSPORT;}
+      }
+
+      Member *member = new Member(dataList[3], std::stoi(dataList[4]),
+                                  type, std::stoi(dataList[6]), std::stoi(dataList[7]),
+                                  std::stoi(dataList[8]), dataList[9], std::stof(dataList[10])); // add attributes
       memberVector.push_back(member);
    }
    memberFile.close();

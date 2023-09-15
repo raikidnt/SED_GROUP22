@@ -3,7 +3,7 @@
 #include <bits/stdc++.h>
 enum MODE {unknown, automation, manual};
 enum LOCATION{SG = 1, HN = 2};
-enum STATUS {UNAVAILABLE, AVALABLE};
+enum STATUS {UNAVAILABLE, AVAILABLE};
 class MotorBike {
    private: 
       std::string bikeID;  //specification of a bike 
@@ -30,11 +30,12 @@ class MotorBike {
       
       MotorBike();   //default constructor
       MotorBike(std::string i_model, std::string i_color, int i_engineSize, MODE i_mode, int i_year, LOCATION i_location);
+
       MotorBike(std::string i_model, std::string i_color, int i_engineSize,
-                   int i_year,MODE i_mode,int rentPrice,LOCATION i_location, 
-                  float i_bikeRating,float i_memberRating, std::string i_description, 
-                   STATUS i_status, std::string i_rentPeriod);
-      
+                int i_year, MODE i_mode, int rentPrice, 
+                LOCATION i_location, float i_bikeRating, float i_memberRating, 
+                std::string i_description, STATUS i_status, std::string i_rentPeriod);
+
       void showBikeInfo();
          
       friend std::string bikeIDgenerate();   //generate random id for bike
