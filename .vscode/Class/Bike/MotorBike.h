@@ -8,7 +8,7 @@ class MotorBike {
    private: 
       std::string bikeID;  //specification of a bike 
       std::vector <std::string> feedBacks;
-      std::vector<float> AvgBikeRating;
+      float bikeRating;
 
    public:
       std::string model;
@@ -18,22 +18,22 @@ class MotorBike {
       int yearMade;
       
       // int initialPrice; //inital rent fee
-      int pdPrice;   //perday rent fee
+      int rentPrice;   //perday rent fee
       
       MODE mode;  //transmission mode
       LOCATION location;   //available location
       STATUS status; //available/unavailable status
       
       std::string description;
-      float minRating;
+      float memberRating;
       std::string rentDuration;
       
       MotorBike();   //default constructor
       MotorBike(std::string i_model, std::string i_color, int i_engineSize, MODE i_mode, int i_year, LOCATION i_location);
       MotorBike(std::string i_model, std::string i_color, int i_engineSize,
-                  MODE i_mode, int i_year, std::string i_description, /*int i_rating,*/ 
-                  LOCATION i_location, STATUS i_status, /*int i_initalPrice,*/ int i_pdPrice, 
-                  float i_minRating, std::string i_rentPeriod);
+                   int i_year,MODE i_mode,int rentPrice,LOCATION i_location, 
+                  float i_bikeRating,float i_memberRating, std::string i_description, 
+                   STATUS i_status, std::string i_rentPeriod);
       
       void showBikeInfo();
          
