@@ -1,5 +1,5 @@
 #include "MotorBike.h"
-#include <bits/stdc++.h>
+
 std::string bikeIDgenerate(){
    // srand(time(NULL));
    int num = rand() % 1001; //random number form 0-100
@@ -11,14 +11,17 @@ MotorBike::MotorBike(std::string i_model, std::string i_color, int i_engineSize,
 :model(i_model), color (i_color),engineSize(i_engineSize), mode(i_mode), yearMade(i_year), location (i_location){};
 
 MotorBike::MotorBike(std::string i_model, std::string i_color, int i_engineSize,
-          MODE i_mode, int i_year, std::string i_description, /*int i_rating,*/
-          LOCATION i_location, STATUS i_status, /*int i_initalPrice,*/ int i_pdPrice,
-          float i_minRating, std::string i_rentDuration)
-          :model(i_model), color(i_color), engineSize(i_engineSize), mode(i_mode), 
-          yearMade(i_year),description(i_description),location(i_location), status(i_status),
-          /*initialPrice(i_initalPrice),*/ pdPrice(i_pdPrice), minRating(i_location), rentDuration(i_rentDuration) {
-            bikeID = bikeIDgenerate(); 
-          };
+                     int i_year, MODE i_mode, int i_rentPrice, LOCATION i_location,
+                     float i_bikeRating, float i_memberRating, std::string i_description,
+                     STATUS i_status, std::string i_rentPeriod)
+
+    : model(i_model), color(i_color), engineSize(i_engineSize),
+      yearMade(i_year), mode(i_mode),rentPrice(i_rentPrice),location(i_location),
+      bikeRating(i_bikeRating), memberRating(i_memberRating),description(i_description),  
+      status(i_status), rentDuration(i_rentPeriod)
+{
+   bikeID = bikeIDgenerate();
+};
 
 void MotorBike::showBikeInfo(){
    std::cout << "- Model: " << model << "\tColor: " << color << "\tMode: ";
@@ -50,6 +53,6 @@ void MotorBike::showBikeInfo(){
       std::cout << "-Invalid-" << std::endl;
       break;
    }
-   std::cout << "- Rating: " << "\tCredit Cost: " << pdPrice << std::endl;
+   std::cout << "- Rating: " << "\tCredit Cost: " << rentPrice << std::endl;
    std::cout << "- Description: " << description << std::endl;
 }

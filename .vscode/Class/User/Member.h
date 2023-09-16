@@ -5,7 +5,7 @@
 #include "../Bike/MotorBike.h"
 #include <bits/stdc++.h>
 
-enum IDTYPE {CCCD, CMND, PASSPORT};
+enum IDTYPE {CITIZEN_ID, PASSPORT};
 
 class Member : public User {
 protected:
@@ -16,16 +16,16 @@ protected:
    int credits;
    bool own_bike;
    std::string bikeID;  //remember bike by its ID
-   double avgMemberRating = 0;
+   float memberRating;
 public:
    std::string fullName;
-   std::string licenseID;
+   int licenseID;
    std::string expDate;
 
    Member();
    Member(std::string i_fullName, int i_phoneNumber,
-          IDTYPE i_id_type, int i_IDNum, std::string i_licenseID,
-          std::string i_expDate, int i_credits);
+          IDTYPE i_id_type, int i_IDNum,  int i_credits,
+          int i_licenseID, std::string i_expDate,float i_memberRating);
    // int MemberLogin(std::string username, std::string password);   
    // int MemberLogout();
    
