@@ -11,14 +11,15 @@ int menu (int choice); //choice for each type of user
 
 class System {
    private:
+   public:
       std::vector<Member*> memberVector;
       std::vector<MotorBike*> motorBikesVector;
-   public:
       System();
       ~System();
       void beginUI();
-      int loadMembers();   //get all member info into vector
+      void loadMembers();   //get all member info into vector
       int loadBikes();  //get all bike info into vector
-
+      void showBikeList();
+      void showMembersList();
 };
 #endif   //UI_H
