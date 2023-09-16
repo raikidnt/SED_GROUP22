@@ -2,6 +2,7 @@
 #include <fstream>
 #include ".vscode\Class\User\Member.cpp"
 #include ".vscode\Class\UI\UI.cpp"
+#include ".vscode\Class\Bike\Motorbike.cpp"
 using namespace std;
 int main(int argc, char *argv[]) {
    // welcome();

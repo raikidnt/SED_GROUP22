@@ -8,7 +8,7 @@
 enum IDTYPE {CCCD, CMND, PASSPORT};
 
 class Member : public User {
-private:
+protected:
    std::string memberID;   //auto-generated
    int phoneNumber;  
    IDTYPE id_type;

@@ -5,7 +5,7 @@ enum MODE {unknown, automation, manual};
 enum LOCATION{SG = 1, HN = 2};
 enum STATUS {UNAVAILABLE, AVALABLE};
 class MotorBike {
-   private: 
+   protected: 
       std::string bikeID;  //specification of a bike 
       std::vector <std::string> feedBacks;
       std::vector<float> AvgBikeRating;
@@ -38,7 +38,7 @@ class MotorBike {
       void showBikeInfo();
          
       friend std::string bikeIDgenerate();   //generate random id for bike
-      
+      friend class Request;
       friend class Admin;
       friend class Member;
 }; 
