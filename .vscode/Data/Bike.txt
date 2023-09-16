@@ -1,4 +1,4 @@
-<ID>|<model>|<color>|<enginesize>|<yearMade>|<transmission_mode>|<CreditCost>|<city>|<Bikerating>|<minMemberRating>|<description>
+<ID>|<model>|<color>|<enginesize>|<yearMade>|<transmission_mode>|<CreditCost>|<city>|<Bikerating>|<minMemberRating>|<description>|<Status>|<rentPeriod>
 Bk-1|Futures   |Black   |125|2021   |Manual|10  |HN|9|6|description1
 Bk-2|Vision    |Black   |125|2019   |Manual|6   |HN|9|6|description2
 Bk-3|AirBlade  |Blue    |150|2022   |Manual|5   |SG|9|6|description3
