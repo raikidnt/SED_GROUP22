@@ -1,11 +1,10 @@
 #include "UI.h"
-#include <iostream>
 #include "../Bike/MotorBike.cpp"
-#include "..\User\Member.cpp"
+#include "../User/Member.cpp"
+// #include "./.vscode/Data/Member.txt"
 
 #define BikeFile "../Class/Data/Bike.txt"
-#define MemberFile "../Class/Data/Member.txt"
-
+#define MEMBERFILE ".vscode/Data/Member.txt"
 System::System (){}; //default constructor
 System::~System(){   //destructor
    // delete memberVector;
@@ -62,7 +61,7 @@ int menu (int choice){ //choice for each type of user
    }
    return menu_choice;
 }
-std::vector <std::string> splitString(std::string &str, char &delimiter){
+std::vector <std::string> splitString(std::string &str, char delimiter){
    std::vector <std::string> result;
    std::istringstream is(str);
    std::string item;
@@ -110,30 +109,43 @@ int System::loadBikes(){
    return 0;
 }
 
-int System::loadMembers(){
-   std::fstream memberFile;
-   memberFile.open(MemberFile, std::ios::in);
-   if(!memberFile){
-      std::cerr<< "Couldn't open MemberFile!"<<std::endl;
-      return -1;
-   }
+void System::loadMembers(){
+   memberVector.clear();
    std::string line;
-   char delim = '|';
-
-   while (std::getline(memberFile, line)){
-      std::vector<std::string> dataList;
-      dataList = splitString (line,delim);
-      IDTYPE type;
-      for (int i = 0; i < dataList.size(); i++) {
-         if (dataList[i] == "CITIZEN_ID"){type = CITIZEN_ID;}
-         else if (dataList[i] == "PASSPORT"){type = PASSPORT;}
-      }
-
-      Member *member = new Member(dataList[3], std::stoi(dataList[4]),
-                                  type, std::stoi(dataList[6]), std::stoi(dataList[7]),
-                                  std::stoi(dataList[8]), dataList[9], std::stof(dataList[10])); // add attributes
-      memberVector.push_back(member);
+   
+   std::ifstream memberFile; 
+   memberFile.open(MEMBERFILE, std::ios::in);
+   if(!memberFile){
+      std::cerr << "Couldn't open 'Member.txt'" << std::endl;
+      return;
    }
-   memberFile.close();
-   return 0;   
+   // Member *member = nullptr;
+   while (std::getline(memberFile, line)){      
+      std::vector<std::string> dataList;
+      dataList = splitString (line, '|');
+      
+      Member *member = new Member(dataList[3], dataList[4],
+                                  dataList[5], dataList[6], std::stoi(dataList[7]),
+                                  dataList[8], dataList[9], std::stof(dataList[10])); // add attributes
+      // std::cout << "after initialize" << std::endl;
+
+      this->memberVector.push_back(member);
+      
+      // for (int i = 0; i < memberVector.size(); i++) {
+      //    memberVector[i]->showInfo_M();
+      // }      
+   }
+   memberFile.close();  
+}
+void System::showMembersList(){
+   if (!memberVector.empty()){
+      for(Member *ptr : memberVector){
+      // for (int i = 0; i < memberVector.size(); i++) {
+         // memberVector[i]->showInfo_M();
+         ptr->showInfo_M();
+      }
+   }
+   else {
+      std::cout << "Empty" << std::endl;
+   }
 }

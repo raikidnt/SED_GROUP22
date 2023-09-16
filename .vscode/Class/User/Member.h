@@ -5,27 +5,25 @@
 #include "../Bike/MotorBike.h"
 #include <bits/stdc++.h>
 
-enum IDTYPE {CITIZEN_ID, PASSPORT};
-
 class Member : public User {
-private:
+protected:
    std::string memberID;   //auto-generated
-   int phoneNumber;  
-   IDTYPE id_type;
-   int IDNum;
-   int credits;
-   bool own_bike;
+   std::string phoneNumber;  
+   std::string id_type;
+   std::string IDNum;
    std::string bikeID;  //remember bike by its ID
+   int credits;
    float memberRating;
+   bool own_bike;
 public:
    std::string fullName;
-   int licenseID;
+   std::string licenseID;
    std::string expDate;
 
    Member();
-   Member(std::string i_fullName, int i_phoneNumber,
-          IDTYPE i_id_type, int i_IDNum,  int i_credits,
-          int i_licenseID, std::string i_expDate,float i_memberRating);
+   Member(std::string i_fullName, std::string i_phoneNumber,
+          std::string i_id_type, std::string i_IDNum,  int i_credits,
+          std::string i_licenseID, std::string i_expDate,float i_memberRating);
    // int MemberLogin(std::string username, std::string password);   
    // int MemberLogout();
    
@@ -45,5 +43,5 @@ public:
    // friend class MotorBike;
    friend class Admin;
 };
-
+std::string memberIDgenerate();
 #endif

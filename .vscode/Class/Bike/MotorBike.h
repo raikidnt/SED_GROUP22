@@ -1,11 +1,13 @@
 #ifndef MOTORBIKE_H
 #define MOTORBIKE_H
 #include <bits/stdc++.h>
+
 enum MODE {unknown, automation, manual};
 enum LOCATION{SG = 1, HN = 2};
 enum STATUS {UNAVAILABLE, AVAILABLE};
+
 class MotorBike {
-   private: 
+   protected: 
       std::string bikeID;  //specification of a bike 
       std::vector <std::string> feedBacks;
       float bikeRating;
@@ -17,7 +19,6 @@ class MotorBike {
       int engineSize; // size of engine (unit cc)
       int yearMade;
       
-      // int initialPrice; //inital rent fee
       int rentPrice;   //perday rent fee
       
       MODE mode;  //transmission mode
@@ -39,7 +40,7 @@ class MotorBike {
       void showBikeInfo();
          
       friend std::string bikeIDgenerate();   //generate random id for bike
-      
+      friend class Request;
       friend class Admin;
       friend class Member;
 }; 
