@@ -6,7 +6,6 @@
 #include "../User/Member.cpp"
 #include "../Bike/MotorBike.h"
 
-using namespace std;
 
 string requestIDgenerate(){
    // srand(time(NULL));

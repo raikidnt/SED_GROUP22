@@ -6,7 +6,6 @@
 #include "../Bike/MotorBike.h"
 #include "../User/Member.h"
 
-using namespace std;
 
 enum STATUS {UNAVAILABLE, AVALABLE};
 class Request : public Member {

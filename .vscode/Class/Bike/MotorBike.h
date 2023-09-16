@@ -1,9 +1,11 @@
 #ifndef MOTORBIKE_H
 #define MOTORBIKE_H
 #include <bits/stdc++.h>
+
 enum MODE {unknown, automation, manual};
 enum LOCATION{SG = 1, HN = 2};
 enum STATUS {UNAVAILABLE, AVAILABLE};
+
 class MotorBike {
    protected: 
       std::string bikeID;  //specification of a bike 
@@ -17,7 +19,6 @@ class MotorBike {
       int engineSize; // size of engine (unit cc)
       int yearMade;
       
-      // int initialPrice; //inital rent fee
       int rentPrice;   //perday rent fee
       
       MODE mode;  //transmission mode
