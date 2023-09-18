@@ -7,7 +7,7 @@
 #include "../Bike/MotorBike.h"
 
 
-string requestIDgenerate(){
+std::string requestIDgenerate(){
    // srand(time(NULL));
    int num = rand() % 1001; //random number form 0-100
    return ("Request - "+std::to_string(num));
@@ -15,34 +15,34 @@ string requestIDgenerate(){
 
 
 Request::Request(){};
-Request::Request(string requestID, string renterID, string returnDate, string startDate, STATUS status, string bike_id, int check)
+Request::Request(std::string requestID, std::string renterID, std::string returnDate, std::string startDate, STATUS status, std::string bike_id, int check)
 :requestID(requestID), renterID(renterID), returnDate(returnDate), status(status), startDate(startDate), bike_id(bike_id), check(check){
     renterID = IDNum;
 };
 
-void Request::setRequestID(string requestID){
+void Request::setRequestID(std::string requestID){
     this->requestID = requestID;
 }
-void Request::setRenterID(string renterID){
+void Request::setRenterID(std::string renterID){
     this->renterID = renterID;
 }
-void Request::setReturnDate(string returnDate){
+void Request::setReturnDate(std::string returnDate){
     this->returnDate = returnDate;
 }
-void Request::setStartDate(string startDate){
+void Request::setStartDate(std::string startDate){
     this->startDate = startDate;
 }
-void Request::setbikeID(string bike_id){
+void Request::setbikeID(std::string bike_id){
     this->bike_id = bike_id;
 }
 void Request::updateRequest(int check){
     this->check = check;
 }
 
-vector<std::string> splitDate(std::string &date, char splitChar){
-    stringstream ss(date);
-    vector<string>strarray;
-    string val;
+std::vector<std::string> splitDate(std::string &date, char splitChar){
+    std::stringstream ss(date);
+    std::vector<std::string>strarray;
+    std::string val;
     while(getline(ss, val, splitChar)){
         strarray.push_back(val);
     }
@@ -50,7 +50,7 @@ vector<std::string> splitDate(std::string &date, char splitChar){
 }
 
 bool validDate(std::string &date){
-    vector<string> d = splitDate(date, '/');
+    std::vector<std::string> d = splitDate(date, '/');
     int day, month, year;
     day = std::stoi(d[0]);
     month = std::stoi(d[1]);
@@ -72,15 +72,52 @@ bool validDate(std::string &date){
     return true;
 }
 
+int getDiff(std::string start_date, std::string return_date){
+
+    std::vector<std::string> split1 = splitDate(start_date, '/');
+    std::vector<std::string> split2 = splitDate(return_date, '/');
+    int d1, m1, y1, d2, m2, y2;
+
+    d1 = std::stoi(split1[0]);
+    m1 = std::stoi(split1[1]);
+    y1 = std::stoi(split1[2]);
+    d2 = std::stoi(split2[0]);
+    m2 = std::stoi(split2[1]);
+    y2 = std::stoi(split2[2]);
+
+    const int Days[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+    if (m1 <= 2) {
+        y1--;
+    }
+    int ly1 = y1 / 4 - y1 / 100 + y1 / 400;
+    if (m2 <= 2) {
+        y2--;
+    }
+    int ly2 = y2 / 4 - y2 / 100 + y2 / 400;
+    long int count1 = y1 * 365 + d1;
+    for (int i = 0; i < m1 - 1; i++) {
+        count1 += Days[i];
+    }
+    count1 += ly1;
+    long int count2 = y2 * 365 + d2;
+    for (int i = 0; i < m2 - 1; i++) {
+        count2 += Days[i];
+    }
+    count2 += ly2;
+
+    int diffdays = count2 - count1;
+    return diffdays;
+}
 
 void Request::sentrequest(std::string i_renterID){
-    string Bikeid;
+    std::string Bikeid;
     MotorBike bike;
     bool check = false;
-    cout << "- Renting request -" << endl;
-    cout << "Enter the bike ID: " << endl; 
+    std::cout << "- Renting request -" << std::endl;
+    std::cout << "Enter the bike ID: " << std::endl; 
      do {
-        getline(cin , Bikeid);
+        getline(std::cin , Bikeid);
     } while (Bikeid.length() == 0);
 
     for(int i = 0; i < Bikeid.size(); i++){
@@ -89,28 +126,28 @@ void Request::sentrequest(std::string i_renterID){
         }
     }
     if (check == false){
-        cout << "Unidentified bike ID." << endl;
+        std::cout << "Unidentified bike ID." << std::endl;
     } else{
         do {
-            cout << "Enter the begin of renting period (dd/mm/yyyy):\n";
+            std::cout << "Enter the begin of renting period (dd/mm/yyyy):\n";
             do {
-                std::getline(cin , startDate);
+                getline(std::cin , startDate);
             } while (startDate.length() == 0);
             if (!validDate(startDate)){
-                cout << "Invalid form, please try again (dd/mm/yyyy)." << endl;
+                std::cout << "Invalid form, please try again (dd/mm/yyyy)." << std::endl;
             }
         } while(!validDate(startDate));
 
         do {
-            cout << "Enter the return date (dd/mm/yyyy):\n";
+            std::cout << "Enter the return date (dd/mm/yyyy):\n";
             do {
-                std::getline(cin , returnDate);
+                getline(std::cin , returnDate);
             } while (returnDate.length() == 0);
             if(startDate == returnDate){
-                cout << "The two dates cannot be the same, please try again." << endl;
+                std::cout << "The two dates cannot be the same, please try again." << std::endl;
             }
             else if (!validDate(startDate)){
-                cout << "Invalid form, please try again (dd/mm/yyyy)." << endl;
+                std::cout << "Invalid form, please try again (dd/mm/yyyy)." << std::endl;
             }
         }while(startDate == returnDate || !validDate(startDate));
 
@@ -122,32 +159,39 @@ void Request::sentrequest(std::string i_renterID){
         req->setStartDate(startDate);
         req->setReturnDate(returnDate);
         req->setRequestID(requestIDgenerate());
-        cout << "Request has been sent." << endl;
+        req->getDiff(startDate, returnDate);
+        std::cout << "Request has been sent." << std::endl;
         delete[] req;
     } 
 }
 
+
+
+
+
+
+    
 void Request::checkRequest(){
     Request *req = new Request();
     int temp;
-    cout << "RequestID: " << requestID << endl;
-    cout << "Bike ID: " << bike_id << endl;
-    cout << "Renter ID: " << renterID << endl;
-    cout << "Start Date: " << startDate << endl;
-    cout << "Return Date: " << returnDate << endl;
-    cout << endl;
+    std::cout << "RequestID: " << requestID << std::endl;
+    std::cout << "Bike ID: " << bike_id << std::endl;
+    std::cout<< "Renter ID: " << renterID << std::endl;
+    std::cout << "Start Date: " << startDate << std::endl;
+    std::cout<< "Return Date: " << returnDate << std::endl;
+    std::cout<< std::endl;
     do {
-        cout << "Press 1 to accept or 0 to reject the request: ";
-        cin >> temp;
+        std::cout<< "Press 1 to accept or 0 to reject the request: ";
+        std::cin >> temp;
 
         if(temp == 1){
-            cout << "You have accepted the request." << endl;
+           std::cout<< "You have accepted the request." << std::endl;
             req->updateRequest(temp);
         } else if (temp == 0){
-            cout << "You have rejected the request." << endl;
+           std::cout<< "You have rejected the request." << std::endl;
             req->updateRequest(temp);
         } else if (temp != 0 && temp != 1){
-            cout << "Invalid choice please try again." << endl; 
+            std::cout << "Invalid choice please try again." << std::endl; 
         }
     }while (temp != 0 && temp != 1);
 }
