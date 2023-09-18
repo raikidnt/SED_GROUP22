@@ -1,12 +1,24 @@
 #ifndef BIKE_RATING_H
 #define BIKE_RATING_H
 #include <bits/stdc++.h>
+#include "../Bike/MotorBike.h"
+#include "../User/Member.h"
 
 class BikeRating {
-   private:
+   protected:
       std::string rateBikeID;
+      int score;
+      std::string comment;
    public:
       BikeRating();
+      BikeRating(std::string rateBikeID, int score, std::string comment): rateBikeID(rateBikeID), score(score), comment(comment){};
+
+      void RateBike();
+      void setRateBikeID(std::string rateBikeID);
+      void setScore(int score);
+      void setComment(std::string comment);
+
+      friend std::string BikeRatingIDgenerate();
 };
 
 

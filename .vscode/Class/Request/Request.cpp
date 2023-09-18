@@ -189,7 +189,6 @@ void Request::checkRequest(){
             req->updateRequest(temp);
         } else if (temp == 0){
            std::cout<< "You have rejected the request." << std::endl;
-            req->updateRequest(temp);
         } else if (temp != 0 && temp != 1){
             std::cout << "Invalid choice please try again." << std::endl; 
         }

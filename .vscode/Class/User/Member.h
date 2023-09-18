@@ -23,7 +23,10 @@ public:
    Member();
    Member(std::string i_fullName, std::string i_phoneNumber,
           std::string i_id_type, std::string i_IDNum,  int i_credits,
-          std::string i_licenseID, std::string i_expDate,float i_memberRating);
+          std::string i_licenseID, std::string i_expDate,float i_memberRating) 
+          : fullName(i_fullName), phoneNumber(i_phoneNumber),
+            id_type(i_id_type), IDNum(i_IDNum), credits(i_credits),
+            licenseID(i_licenseID), expDate(i_expDate), memberRating(i_memberRating){};
    // int MemberLogin(std::string username, std::string password);   
    // int MemberLogout();
    
@@ -43,6 +46,9 @@ public:
    // friend class MotorBike;
    friend class Admin;
    friend class System;
+   friend class Request;
+   friend class BikeRating;
+   friend void RateBike();
 };
 std::string memberIDgenerate();
 #endif
