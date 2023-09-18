@@ -3,7 +3,7 @@
 #include <bits/stdc++.h>
 
 class RateRenter{
-   private:
+   protected:
       std::string rateRenterID;  // the id of the rate
    public:  
       RateRenter();
