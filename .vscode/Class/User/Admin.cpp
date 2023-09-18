@@ -1,6 +1,10 @@
 #include "Admin.h"
-Admin::Admin(){}; // default constructor
+// #include "../UI/UI.cpp"
 
+Admin::Admin(){}; // default constructor
+// Admin::Admin (System *sys){   //ptr to system
+
+// };
 bool Admin::login(std::string username, std::string password){
    std::cout << "Enter admin username: ";
    std::cin >> username;

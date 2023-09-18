@@ -42,6 +42,7 @@ public:
    // void review(); // review renter
    // friend class MotorBike;
    friend class Admin;
+   friend class System;
 };
 std::string memberIDgenerate();
 #endif
