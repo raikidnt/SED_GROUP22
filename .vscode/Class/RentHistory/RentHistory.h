@@ -28,11 +28,6 @@ class RentHis : public Request{
         void totalPrice(Request& total);
         friend int getDiff(std::string start_date, std::string return_date);
         friend class Request;
-
-
-   
-    
-
 };
 
 

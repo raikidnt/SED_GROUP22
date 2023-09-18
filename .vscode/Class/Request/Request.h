@@ -43,6 +43,7 @@ class Request : public Member {
       friend class Motorbike;
       friend class Member;
       friend class RentHis;
+      friend class RateRenter;
       friend double totalPrice(double price);
 
 };
