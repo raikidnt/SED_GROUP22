@@ -39,5 +39,6 @@ class MotorBike {
       friend class Request;
       friend class Admin;
       friend class Member;
+      friend class System;
 }; 
 #endif   // BIKE_H

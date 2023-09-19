@@ -4,17 +4,17 @@
 #include <bits/stdc++.h>
 #include "User.h"
 #include "../UI/UI.h"
+
 class Admin :public User{
    private:
-      std::string admin_username = "admin";
-      std::string admin_password = "123abc";
+      std::string admin_username;
+      std::string admin_password;
    public:
       Admin(); //default constructor
-      // Admin (System *sys); //
-      bool login(std::string username, std::string password);
-      bool logout();
-      void viewAllMembers();  //view all member in the system
-      void viewAllMotorBikes();   //view all motorbike in the system
+      Admin (std::string username, std::string password);
+
+      friend class System;
+      friend class MotorBike;
 };
 
 

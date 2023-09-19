@@ -4,13 +4,12 @@
 
 class User{
     private:
-        std::string userName;
+        std::string username;
         std::string password;
     public:
         User ();
         User (std::string n,std::string p);
-        int Login(std::string name, std::string pass);
-        // int UserLogout();
+        friend class System;
 };
 
 #endif // USER_H
