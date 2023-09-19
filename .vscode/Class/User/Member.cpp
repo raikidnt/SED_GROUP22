@@ -11,10 +11,12 @@ std::string memberIDgenerate(){
 
 Member::Member(){} //default constructor
 
-Member::Member(std::string i_fullName = "", std::string i_phoneNumber = "",
+Member::Member(std::string i_username = "", std::string i_password = "",
+               std::string i_fullName = "", std::string i_phoneNumber = "", std::string i_location = "",
                std::string i_id_type = "", std::string i_IDNum = "", int i_credits = 0,
                std::string i_licenseID = "", std::string i_expDate = "", float i_memberRating = 0)
-    : fullName(i_fullName), phoneNumber(i_phoneNumber),
+    : User(i_username, i_password), 
+      fullName(i_fullName), phoneNumber(i_phoneNumber), memLocation(i_location),
       id_type(i_id_type), IDNum(i_IDNum), credits(i_credits),
       licenseID(i_licenseID), expDate(i_expDate), memberRating(i_memberRating)
 {

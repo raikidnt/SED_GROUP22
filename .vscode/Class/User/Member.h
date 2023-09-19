@@ -4,14 +4,17 @@
 #include "User.h"
 #include "../Bike/MotorBike.h"
 #include <bits/stdc++.h>
-
+std::string LOCATIONS[3] = {"HN", "SG", "DN"};
 class Member : public User {
 protected:
+   std::string member_username;
+   std::string member_password;
    std::string memberID;   //auto-generated
    std::string phoneNumber;  
    std::string id_type;
    std::string IDNum;
    std::string bikeID;  //remember bike by its ID
+   std::string memLocation;   //location of member
    int credits;
    float memberRating;
    bool own_bike;
@@ -21,13 +24,10 @@ public:
    std::string expDate;
 
    Member();
-   Member(std::string i_fullName, std::string i_phoneNumber,
-          std::string i_id_type, std::string i_IDNum,  int i_credits,
-
-          std::string i_licenseID, std::string i_expDate,float i_memberRating) 
-          : fullName(i_fullName), phoneNumber(i_phoneNumber),
-            id_type(i_id_type), IDNum(i_IDNum), credits(i_credits),
-            licenseID(i_licenseID), expDate(i_expDate), memberRating(i_memberRating){};
+   Member(std::string i_username, std::string i_password,
+          std::string i_fullName, std::string i_phoneNumber, std::string i_location,
+          std::string i_id_type, std::string i_IDNum, int i_credits,
+          std::string i_licenseID, std::string i_expDate, float i_memberRating);
 
    // int MemberLogin(std::string username, std::string password);   
    // int MemberLogout();

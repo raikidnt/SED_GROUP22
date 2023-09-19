@@ -7,12 +7,12 @@
 
 class System {
    private:
-   public:
       std::vector<Member*> memberVector;
       std::vector<MotorBike*> motorBikesVector;
       Admin *admin;
       MotorBike *current_motorBikes = nullptr;
       Member *current_member = nullptr;
+   public:
       System();
       ~System();
 
@@ -22,8 +22,8 @@ class System {
       void loginMemberMenu(); 
       void loginAdminMenu();
             
-      int loginMember(std::string username,std::string password);   // function to login
-      int loginAdmin(std::string username,std::string password); //log in as a admin
+      bool loginMember(std::string &username,std::string &password);   // function to login
+      bool loginAdmin(std::string username,std::string password); // log in as a admin
 
       void memberMenu(); //after login as member
       void adminMenu();  //after login as admin
@@ -38,26 +38,28 @@ class System {
       int menuChoice(int start, int end); //check for valid input (only number within range)
 
       bool numValid(std::string input);   //check for input a number
-      bool phoneNumValid(std::string phoneNumber);
 
       void guestViewBike();
       void guestRegister();
 
+      bool isPhoneNum(std::string s);  // first 0, 10 char, all num
 
-bool isPhoneNum(std::string s);  // first 0, 10 char, all num
+      bool isPassword(std::string s);    // min length 8 char, no space
 
-bool isPassword(std::string s);    // min length 6char, no space
+      bool isUsername(std::string s);  //no symbol, space, min length 6
 
-bool isUsername(std::string s);  //no symbol, space, min length 6
+      bool isFullname(std::string s); //no symbol, number, 
 
-bool isFullname(std::string s); //no symbol, number, 
+      bool isDateFormat(std::string s); //DD/MM/YYYY
 
-bool isDateFormat(std::string s); //
+      bool isLicence(std::string s); // 12 number, no space or symbol
 
-bool isLicence(std::string s); // 12 number, no space or symbol
+      bool isIDValid(std::string s,int num); //
 
-bool isIDValid(std::string s,int num); //
+      void saveMembertoFile();
+      void saveBiketoFile();
 };
+
 std::vector <std::string> splitString(std::string &str, char delimiter);
 std::string stringCut(std::string s);
 #endif   //UI_H
