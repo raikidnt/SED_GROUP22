@@ -3,7 +3,9 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/.vscode/Class/Request",
+                "${workspaceFolder}/.vscode/Class/RentHistory"
             ],
             "defines": [
                 "_DEBUG",

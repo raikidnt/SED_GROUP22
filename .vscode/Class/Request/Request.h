@@ -9,8 +9,8 @@
 
 enum STATUS {UNAVAILABLE, AVALABLE};
 class Request : public Member {
-   private:
-      string requestID; // sửa datatype trong uml
+   protected:
+      std::string requestID; // sửa datatype trong uml
       std::string renterID;   //member
       std::string returnDate;
       STATUS status; //available/unavailable status
@@ -18,21 +18,22 @@ class Request : public Member {
       std::string bike_id;
       int check;
    public:
-      Request();
-      Request(string requestID, string renterID, string returnDate, string startDate, STATUS status, string bike_id, int check)
+      Request::Request();
+      Request::Request(std::string requestID, std::string renterID, std::string returnDate, std::string startDate, STATUS status, std::string bike_id, int check)
       :requestID(requestID), renterID(renterID), returnDate(returnDate), startDate(startDate), status(status), bike_id(bike_id), check(check){};  
 
-      void setRequestID(string requestID);
-      void setRenterID(string renterID);
-      void setStartDate(string startDate);
-      void setReturnDate(string returnDate);
-      void setbikeID(string bike_id);
+      void setRequestID(std::string requestID);
+      void setRenterID(std::string renterID);
+      void setStartDate(std::string startDate);
+      void setReturnDate(std::string returnDate);
+      void setbikeID(std::string bike_id);
       void updateRequest(int check);
+      int getDiff(std::string start_date, std::string return_date);
 
       void sentrequest(std::string i_renterID); 
       // void getTime(std::string sDate, std::string rDate);
       bool isValid(std::string &date);
-      vector<std::string> splitDate(std::string &date, char splitChar);
+      std::vector<std::string> splitDate(std::string &date, char splitChar);
 
       void checkRequest();
 
@@ -40,7 +41,10 @@ class Request : public Member {
       int rentTotal();
 
       friend class Motorbike;
-      
+      friend class Member;
+      friend class RentHis;
+      friend class RateRenter;
+      friend double totalPrice(double price);
 
 };
 
