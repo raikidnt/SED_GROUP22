@@ -4,11 +4,17 @@
 #include "../Bike/MotorBike.h"
 #include "../User/Member.h"
 #include "../User/Admin.h"
-
+#include "../bikeRating/bikeRating.h"
+#include "../renterRating/renterRating.h"
+#include "../Request/Request.h"
 class System {
    private:
       std::vector<Member*> memberVector;
       std::vector<MotorBike*> motorBikesVector;
+
+      std::vector <BikeRating*> bikeRatingVector;
+      std::vector <RenterRating*> renterRatingVector;
+      std::vector <Request*> requestVector;
       Admin *admin;
       MotorBike *current_motorBikes = nullptr;
       Member *current_member = nullptr;
@@ -31,6 +37,10 @@ class System {
       void loadMembers();   //get all member info into vector
       void loadBikes();  //get all bike info into vector
       void loadAdmin(); //get admin to system
+      
+      void loadBikeRatings();    //get all bike ratings into vector
+      void loadMemberRatings();  //get all member ratings into vector
+      void loadRequests(); //get all requests into vector
 
       void adminViewBike();
       void adminViewMembers();

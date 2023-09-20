@@ -1,0 +1,11 @@
+id_renter|id_owner|5|comment
+id_renter|id_owner|3|comment
+id_renter|id_owner|5|comment
+id_renter|id_owner|7|comment
+id_renter|id_owner|1|comment
+id_renter|id_owner|8|comment
+id_renter|id_owner|1|comment
+id_renter|id_owner|0|comment
+id_renter|id_owner|1|comment
+id_renter|id_owner|9|comment
+id_renter|id_owner|7|comment

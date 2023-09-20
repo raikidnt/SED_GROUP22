@@ -1,27 +1,30 @@
 #ifndef REQUEST_H
 #define REQUEST_H
 #include <bits/stdc++.h>
-#include <string>
-#include <vector>
+// #include <string>
+// #include <vector>
 #include "../Bike/MotorBike.h"
 #include "../User/Member.h"
 
 
 enum STATUS {UNAVAILABLE, AVALABLE};
+std::string STATUS[2] = {"UNAVAILABLE", "AVALABLE"};
 class Request : public Member {
    protected:
       std::string requestID; // sửa datatype trong uml
       std::string renterID;   //member
       std::string returnDate;
-      STATUS status; //available/unavailable status
+      std::string status;
+      // STATUS status; //available/unavailable status
+      
       std::string startDate;
       std::string bike_id;
       int check;
    public:
-      Request::Request();
-      Request::Request(std::string requestID, std::string renterID, std::string returnDate, std::string startDate, STATUS status, std::string bike_id, int check)
-      :requestID(requestID), renterID(renterID), returnDate(returnDate), startDate(startDate), status(status), bike_id(bike_id), check(check){};  
-
+      Request();
+      Request(std::string requestID, std::string renterID,
+              std::string returnDate, std::string startDate,
+              std::string status, std::string bike_id, int check);
       void setRequestID(std::string requestID);
       void setRenterID(std::string renterID);
       void setStartDate(std::string startDate);

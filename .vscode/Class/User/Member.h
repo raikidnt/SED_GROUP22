@@ -7,16 +7,18 @@
 std::string LOCATIONS[3] = {"HN", "SG", "DN"};
 class Member : public User {
 protected:
-   std::string member_username;
-   std::string member_password;
+   // std::string member_username;
+   // std::string member_password;
    std::string memberID;   //auto-generated
-   std::string phoneNumber;  
+   std::string phoneNumber; 
    std::string id_type;
    std::string IDNum;
    std::string bikeID;  //remember bike by its ID
    std::string memLocation;   //location of member
+
    int credits;
-   float memberRating;
+   float memberRating;  //score
+   
    bool own_bike;
 public:
    std::string fullName;
@@ -37,7 +39,9 @@ public:
    // void viewMotorBikes();
    // void rentMotorBikes();
    int topUp(); // add addtional money to current account
-   int addBike(MotorBike &bikes);
+   // int addBike(MotorBike &bike);
+   void addBike ();  //add entirely new bike to member
+   bool numValid(std::string s);
    // int searchBike(std::string bikeID);
    // void listBike(std::string bikeID);   // list bike to be available
    // void unlistBike(std::string bikeID); // remove bike from list

@@ -1,23 +1,26 @@
 #include "Request.h"
 #include <bits/stdc++.h>
-#include <string>
-#include <vector>
+// #include <string>
+// #include <vector>
 #include "../Bike/MotorBike.cpp"
 #include "../User/Member.cpp"
 #include "../Bike/MotorBike.h"
 
-
 std::string requestIDgenerate(){
    // srand(time(NULL));
-   int num = rand() % 1001; //random number form 0-100
-   return ("Request - "+std::to_string(num));
-}
-
+   int num = rand() % 1001; //random number form 0-1000
+   return ("Rqst - " + std::to_string(num));
+};
 
 Request::Request(){};
-Request::Request(std::string requestID, std::string renterID, std::string returnDate, std::string startDate, STATUS status, std::string bike_id, int check)
-:requestID(requestID), renterID(renterID), returnDate(returnDate), status(status), startDate(startDate), bike_id(bike_id), check(check){
-    renterID = IDNum;
+Request::Request(std::string requestID, std::string renterID,
+                 std::string returnDate, std::string startDate,
+                 std::string status, std::string bike_id, int check)
+    : requestID(requestID), renterID(renterID),
+      returnDate(returnDate), status(status),
+      startDate(startDate), bike_id(bike_id), check(check)
+{
+    // renterID = IDNum;
 };
 
 void Request::setRequestID(std::string requestID){

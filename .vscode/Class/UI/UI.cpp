@@ -7,6 +7,9 @@
 #define BIKE_FILE ".vscode/Data/Bike.txt"
 #define MEMBER_FILE ".vscode/Data/Member.txt"
 #define ADMIN_FILE ".vscode/Data/Admin.txt"
+#define MEMBER_RATING_FILE ".vscode/Data/MemberRating.txt"
+#define BIKE_RATING_FILE ".vscode/Data/BikeRating.txt"
+#define REQUEST_FILE ".vscode/Data/Request.txt"
 
 #define INITIAL_RATING 10.0
 #define INITIAL_CREDIT 20
@@ -94,8 +97,11 @@ void System::loginMemberMenu(){   //before login
       std::cout << "Enter Member Password: ";
       std::cin >> password;
       if (loginMember(username, password)) { //if true -> login successfully
+         std::cout << "Login successfully" << std::endl;
          memberMenu();
          break;
+      } else {
+         std::cout << "Login Failed! Wrong username or password." << std::endl;
       }
    case 2:
       mainMenu();
@@ -142,7 +148,7 @@ void System::memberMenu() {  //after login successful
    std::cout << "===========================================" << std::endl;
 
    std::cout << "1. Rent Motorbikes" << std::endl; //view bike to rent
-   std::cout << "2. Add motorbike" << std::endl;
+   std::cout << "2. Add motorbike" << std::endl;   // addbike to member
    std::cout << "3. View Request" << std::endl; //view upcoming requests
    std::cout << "4. View History" << std::endl; //view history of bike or member
    std::cout << "5. Logout" << std::endl;
@@ -153,6 +159,7 @@ void System::memberMenu() {  //after login successful
       break;
    case 2:
       //add bike to member
+      // current_member->addBike();
       break;
    case 3:
       //view request
@@ -498,25 +505,30 @@ void System::guestRegister(){
 
    std::cin.ignore();
    do {
+      std::cout << "Format: min length 6, no whitespace\n";
       std::cout <<"Enter username: ";  //username
       std::getline(std::cin, username);
+      std::cout << "-------------------------------------\n";
    } while (!isUsername(username));
 
    do {
       std::cout << "Format: at least 1 uppercase, 1 number, 1 special characters, "<<std::endl; //
       std::cout << "Enter password: "; //password
       std::getline(std::cin, password);
+      std::cout << "-------------------------------------\n";
    } while (!isPassword(password));
 
    do{
    std::cout <<"Enter first and last name: ";  //fullname
    std::getline(std::cin, fullname);
+   std::cout << "-------------------------------------\n";
    } while (!isFullname(fullname));
 
    do {
       std::cout <<"Format: 10 numbers, stat with 0\n";
       std::cout <<"Enter phone number: "; //phone number
       std::getline(std::cin, phoneNum);  
+      std::cout << "-------------------------------------\n";
    } while (!isPhoneNum(phoneNum));
    
    std::cout  << "Choose your location:\n1. Hanoi\n2. Saigon\n3. Danang\n";
@@ -539,6 +551,7 @@ void System::guestRegister(){
    std::cout << "Choose your ID type: "<<std::endl;
    std::cout <<"1. CITIZEN_ID\n2. PASSPORT\n"; //ID types
    choice = menuChoice(1,2);
+   std::cout << "-------------------------------------\n";
    switch(choice){
       case 1:
          ID_type = "CITIZEN_ID";
@@ -547,6 +560,7 @@ void System::guestRegister(){
             std::cout << "Format: 10 numbers" <<std::endl;
             std::cout << "Enter your Citizen ID: ";
             std::getline(std::cin,ID);
+            std::cout << "-------------------------------------\n";
          } while (!isIDValid(ID, 1));
          break;
       case 2:
@@ -556,19 +570,23 @@ void System::guestRegister(){
             std::cout << "Format: 8 numbers"<<std::endl;
             std::cout << "Enter your Passport ID: ";
             std::getline(std::cin,ID);
+            std::cout << "-------------------------------------\n";
+
          } while (!isIDValid(ID,2));
          break;
    }
    
    do {
       std::cout << "Format: 12 numbers" << std::endl;
-      std::cout << "Enter liscense number: "; // liscense number
+      std::cout << "Enter Driver License number: "; // liscense number
       std::getline(std::cin, licenseID);
+      std::cout << "-------------------------------------\n";
    } while (!isLicence(licenseID));
    
    do {
       std::cout <<"Enter liscense expiration date (DD/MM/YYYY): "; //liscense date
       std::getline(std::cin, expDate);
+      std::cout << "-------------------------------------\n";
    } while (!isDateFormat(expDate));
 
    Member *newMember = new Member(username, password, 
@@ -728,4 +746,53 @@ void System::saveBiketoFile(){
                << "\n";
    }
    bikeFile.close();
+}
+void System::loadBikeRatings(){
+   std::string line;
+   std::ifstream file{BIKE_RATING_FILE};
+   if(!file){
+      std::cerr << "Couldn't open file " << std::endl;
+   }
+   while (std::getline(file, line)){      
+      std::vector<std::string> dataList;
+      dataList = splitString (line, '|');
+      BikeRating *newBkRating = new BikeRating(std::stoi(dataList[2]),
+                                               dataList[3]);
+      bikeRatingVector.push_back(newBkRating);
+   }
+   file.close();  
+}
+void System::loadMemberRatings(){
+   std::string line;
+   std::ifstream file{MEMBER_RATING_FILE};
+   if(!file){
+      std::cerr << "Couldn't open file " << std::endl;
+   }
+   while (std::getline(file, line)){      
+      std::vector<std::string> dataList;
+      dataList = splitString (line, '|');
+      RenterRating *newRtRating = new RenterRating(dataList[0], dataList[1],
+                                                   std::stoi(dataList[2]), dataList[3]);
+      renterRatingVector.push_back(newRtRating);
+   }
+   file.close(); 
+}
+
+/*void System::loadRequests(){
+std::string line;
+   std::ifstream file{REQUEST_FILE};
+   if(!file){
+      std::cerr << "Couldn't open file " << std::endl;
+   }
+   while (std::getline(file, line)){      
+      std::vector<std::string> dataList;
+      dataList = splitString (line, '|');
+      Request *newRequest = new Request();
+
+      requestVector.push_back(newRequest);
+   }
+   file.close();
+}*/
+void System::MemberRentBike(){
+
 }

@@ -1,12 +1,10 @@
 #include "Member.h"  //include header
-#include <bits/stdc++.h>
 #include "User.cpp"  //include parent cpp files
-// #include "../Bike/MotorBike.cpp"//include cpp file of bike class\#include "../Bike/MotorBike.h"
 
 std::string memberIDgenerate(){
    // srand(time(NULL));
    int num = rand() % 1001; //random number form 0-100
-   return ("M-"+std::to_string(num));
+   return ("Mb-"+std::to_string(num));
 }
 
 Member::Member(){} //default constructor
@@ -31,12 +29,40 @@ void Member::showInfo_M(){
    std::cout << "================================================================" << std::endl;
    //show own bike???
 }
-// int Member::MemberLogin(std::string usename, std::string password) {
-   // User::UserLogin(username,password);
-   // return 0;
-// }
-// int Member::addBike(MotorBike &bike) {
-//    this->bikeID = bike.bikeID;   //remember the id of the bike
-//    own_bike = true;  
-//    return 0;
-// }
+
+void Member::addBike(){
+   std::string model, color, mode,enginerSize, year,location;
+
+   std::cout << "Enter Bike model:  " << std::endl;
+   std::getline(std::cin, model);
+
+   std::cout <<"Enter color: " << std::endl;
+   std::getline(std::cin, color);
+   
+   do {
+      std::cout << "Enter engine size: " << std::endl;
+      std::getline(std::cin, enginerSize);
+   }while(!numValid(enginerSize));
+   
+   std::cout << "Enter year made: " << std::endl;
+   
+   
+   std::getline(std::cin, year);
+
+   std::cout<<"Enter mode " << std::endl;
+   std::getline(std::cin, mode);
+   
+   //location
+   
+   //price to rent
+}
+bool Member::numValid(std::string input){
+   if (std::stoi(input) > 57 || std::stoi(input) < 48) {
+      return false;
+   } else {
+      return true;
+   }
+}
+bool isYear(std::string s){
+   
+}
