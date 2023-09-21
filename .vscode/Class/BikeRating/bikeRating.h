@@ -1,8 +1,7 @@
 #ifndef BIKE_RATING_H
 #define BIKE_RATING_H
 #include <bits/stdc++.h>
-#include "../Bike/MotorBike.h"
-#include "../User/Member.h"
+std::string BikeRatingIDgenerate();
 
 class BikeRating {
    protected:
@@ -13,12 +12,11 @@ class BikeRating {
       BikeRating();
       BikeRating(int score, std::string comment);
 
-      void RateBike();
-      void setRateBikeID(std::string rateBikeID);
-      void setScore(int score);
-      void setComment(std::string comment);
-
-      friend std::string BikeRatingIDgenerate();
+      // void RateBike();
+      // void setRateBikeID(std::string rateBikeID);
+      // void setScore(int score);
+      // void setComment(std::string comment);
+      friend class System;
 };
 
 

@@ -13,14 +13,16 @@ class RenterRating{
       std::string comment;
       int score;
    public:  
-      RenterRating::RenterRating();
-      RenterRating::RenterRating(std::string renterid, std::string ownerid, int score, std::string comment){};
+      RenterRating();
+      RenterRating(std::string renterid, std::string ownerid,
+                                 int score, std::string comment);
 
       // void RateRenter::setscore(int score);
       // void RateRenter::rateRenter();
       // void RateRenter::setcomment(std::string comment);
 
       friend class Member;
+      friend class System;
 };
 
 

@@ -1,10 +1,10 @@
 #include "Request.h"
-#include <bits/stdc++.h>
+// #include <bits/stdc++.h>
 // #include <string>
 // #include <vector>
-#include "../Bike/MotorBike.cpp"
-#include "../User/Member.cpp"
-#include "../Bike/MotorBike.h"
+// #include "../Bike/MotorBike.cpp"
+// #include "../User/Member.cpp"
+// #include "../Bike/MotorBike.h"
 
 std::string requestIDgenerate(){
    // srand(time(NULL));
@@ -15,12 +15,12 @@ std::string requestIDgenerate(){
 Request::Request(){};
 Request::Request(std::string requestID, std::string renterID,
                  std::string returnDate, std::string startDate,
-                 std::string status, std::string bike_id, int check)
+                 STATUS status, std::string bike_id, int check)
     : requestID(requestID), renterID(renterID),
       returnDate(returnDate), status(status),
       startDate(startDate), bike_id(bike_id), check(check)
 {
-    // renterID = IDNum;
+    // renterID = IDNum; 
 };
 
 void Request::setRequestID(std::string requestID){

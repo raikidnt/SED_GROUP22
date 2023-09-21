@@ -1,9 +1,12 @@
 #include "renterRating.h"
+#include "renterRating.h"
 // #include "../User/Member.cpp"
 
 RenterRating::RenterRating(){};
-RenterRating::RenterRating(std::string renterid, std::string ownerid, int score, std::string comment)
-    : renterid(renterid), ownerid(ownerid), score(score), comment(comment){};
+RenterRating::RenterRating(std::string renterid, std::string ownerid,
+                           int score, std::string comment)
+    : renterid(renterid), ownerid(ownerid),
+      score(score), comment(comment){};
 
 // void RateRenter::setscore(int score){
 //     this -> score = score;
@@ -56,6 +59,3 @@ RenterRating::RenterRating(std::string renterid, std::string ownerid, int score,
 //     std::cout << "Thank you for rating!" << std::endl;
 //     delete renterID;
 // }
-
-
-

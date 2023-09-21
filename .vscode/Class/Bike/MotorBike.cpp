@@ -7,8 +7,15 @@ std::string bikeIDgenerate(){
 }
 
 MotorBike::MotorBike(){}
-MotorBike::MotorBike(std::string i_model, std::string i_color, int i_engineSize, std::string i_mode, int i_year, std::string i_location)
-:model(i_model), color (i_color),engineSize(i_engineSize), mode(i_mode), yearMade(i_year), location (i_location){};
+MotorBike::MotorBike(std::string i_model, std::string i_color,
+                     int i_engineSize, std::string i_mode,
+                     int i_year, std::string i_location)
+    : model(i_model), color(i_color),
+      engineSize(i_engineSize), mode(i_mode),
+      yearMade(i_year), location(i_location)
+{
+   bikeID = bikeIDgenerate();
+};
 
 MotorBike::MotorBike(std::string i_model, std::string i_color, int i_engineSize,
           int i_year, std::string i_mode, int i_rentPrice,
@@ -20,7 +27,7 @@ MotorBike::MotorBike(std::string i_model, std::string i_color, int i_engineSize,
       status(i_status), rentDuration(i_rentPeriod)
 {
    bikeID = bikeIDgenerate();
-};   
+};
 
 void MotorBike::showBikeInfo(){
    std::cout << "- Model: " << model << "\tColor: " << color << "\tMode: " << mode <<std::endl;

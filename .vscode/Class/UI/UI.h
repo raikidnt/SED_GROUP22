@@ -38,9 +38,9 @@ class System {
       void loadBikes();  //get all bike info into vector
       void loadAdmin(); //get admin to system
       
-      void loadBikeRatings();    //get all bike ratings into vector
-      void loadMemberRatings();  //get all member ratings into vector
-      void loadRequests(); //get all requests into vector
+      // void loadBikeRatings();    //get all bike ratings into vector
+      // void loadMemberRatings();  //get all member ratings into vector
+      // void loadRequests(); //get all requests into vector
 
       void adminViewBike();
       void adminViewMembers();
@@ -51,7 +51,8 @@ class System {
 
       void guestViewBike();
       void guestRegister();
-
+      void listBikeMenu();
+      void unlistBikeMenu();
       bool isPhoneNum(std::string s);  // first 0, 10 char, all num
 
       bool isPassword(std::string s);    // min length 8 char, no space
@@ -68,6 +69,12 @@ class System {
 
       void saveMembertoFile();
       void saveBiketoFile();
+
+      void saveBikeRatingtoFile();
+      void saveMemberRatingtoFile();
+
+      void rentMenu(); //show bike base on current member location and rating
+      friend class Member;
 };
 
 std::vector <std::string> splitString(std::string &str, char delimiter);

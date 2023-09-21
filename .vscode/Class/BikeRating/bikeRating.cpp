@@ -1,21 +1,14 @@
 #include "bikeRating.h"
-#include <bits/stdc++.h>
-#include "../Bike/MotorBike.cpp"
-#include "../User/Member.cpp"
 
-
-std::string bikeRatingIDgenerate(){
+std::string BikeRatingIDgenerate(){
    // srand(time(NULL));
    int num = rand() % 1001; //random number form 0-100
    return ("Bkrt - " + std::to_string(num));
 }
 
-BikeRating::BikeRating(){};
+BikeRating::BikeRating(){}
 
-BikeRating::BikeRating(int score, std::string comment) : score(score), comment(comment) {
-   rateBikeID = bikeRatingIDgenerate();
-};
-
+BikeRating::BikeRating(int i_score, std::string i_comment) : score(i_score), comment(i_comment) {}
 // void BikeRating::setRateBikeID(std::string rateBikeID){
 //     this->rateBikeID = rateBikeID;
 // }
@@ -72,6 +65,3 @@ BikeRating::BikeRating(int score, std::string comment) : score(score), comment(c
 //     delete renterID;
 //     delete b_RateBike;
 // }
-
-
-
