@@ -33,7 +33,7 @@ class System {
 
       void memberMenu(); //after login as member
       void adminMenu();  //after login as admin
-
+      void addBike(); //add bike to system
       void loadMembers();   //get all member info into vector
       void loadBikes();  //get all bike info into vector
       void loadAdmin(); //get admin to system
@@ -53,19 +53,23 @@ class System {
       void guestRegister();
       void listBikeMenu();
       void unlistBikeMenu();
+      
       bool isPhoneNum(std::string s);  // first 0, 10 char, all num
-
       bool isPassword(std::string s);    // min length 8 char, no space
-
       bool isUsername(std::string s);  //no symbol, space, min length 6
-
       bool isFullname(std::string s); //no symbol, number, 
-
       bool isDateFormat(std::string s); //DD/MM/YYYY
-
       bool isLicence(std::string s); // 12 number, no space or symbol
-
       bool isIDValid(std::string s,int num); //
+
+      bool isYear(std::string s);   //only num, 4 digits, > 1900
+      bool isBikeModel(std::string s); 
+      bool isBikecolor(std::string s); 
+      bool isBikeEngineSize(std::string s);  //only num, > 0
+      bool isMinRating(std::string s); //only num, 1-10
+      bool isRentPrice(std::string S); //only num, no char
+
+
 
       void saveMembertoFile();
       void saveBiketoFile();
@@ -73,6 +77,7 @@ class System {
       void saveBikeRatingtoFile();
       void saveMemberRatingtoFile();
 
+      
       void rentMenu(); //show bike base on current member location and rating
       friend class Member;
 };

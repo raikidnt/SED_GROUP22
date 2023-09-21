@@ -22,17 +22,16 @@ class MotorBike {
       float memberRating;
       
       MotorBike();   //default constructor
-      MotorBike(std::string i_model, std::string i_color,
-                int i_engineSize, std::string i_mode,
-                int i_year, std::string i_location);
+      // MotorBike(std::string i_model, std::string i_color,
+      //           int i_engineSize, std::string i_mode,
+      //           int i_year, std::string i_location);
 
-      MotorBike(std::string i_model, std::string i_color, int i_engineSize,
+      MotorBike(std::string i_bikeID, std::string i_model, std::string i_color, int i_engineSize,
                 int i_year, std::string i_mode, int i_rentPrice, 
                 std::string i_location, float i_bikeRating, float i_memberRating, 
                 std::string i_description, std::string i_status, std::string i_rentPeriod);
       void showBikeInfo();
       // std::string setAvailability(std::string s);
-      friend std::string bikeIDgenerate();   //generate random id for bike
       
       friend class Request;
       friend class Admin;
@@ -40,4 +39,5 @@ class MotorBike {
       friend class System;
       friend class BikeRating;
 }; 
+std::string bikeIDgenerate();   //generate random id for bike
 #endif   // BIKE_H

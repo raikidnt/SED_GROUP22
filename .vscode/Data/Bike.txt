@@ -10,4 +10,9 @@ Bk-899|Ninja     |Black   |1000|2015|Manual|8|SG|6.7|7.5|description9|unavailabl
 Bk-153|Neo      |Green   |125|2022|Manual|9|SG|9|9|description10|unavailable|rentp
 Bk-292|Hayabusa |Black   |1300|2022|Manual|12|HN|4.5|10|description11|unavailable|rentp
 Bk-370|Triump   |Blue    |2600|2022|Manual|15|SG|10|5.1|description12|unavailable|rentp
-Bk-757|eee|we|123|2022|Manual|2|HN|10|2|dfw||0
+Bk-30|qwe|qwe|3333|4444|Manual|4|SG|10|5|ggg|Available|0
+Bk-683|qwe|qwe|444|4444|Auto|6|HN|10|5|ttt|Available|0
+Bk-38|newbike|ook|9090|6054|Unknown|10|SG|10|7.8|godlike|Available|0
+Bk-12|newb|rrr|444|3333|Manual|6|HN|10|7|oookkk|Available|0
+Bk-302|kkk|ooo|403|2039|Auto|7|SG|10|8|god|Available|0
+Bk-789|ee|ee|555|4444|Auto|4|HN|10|5|hyhy|Available|0

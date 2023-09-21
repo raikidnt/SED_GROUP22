@@ -33,9 +33,9 @@ void System::mainMenu (){
 
    std::cout << "Use the app as:" << std::endl;
    std::cout << "1. Guest\t2. Member\t3. Admin\t4. Exit" << std::endl;
-   // loadMembers();
-   // loadBikes();
-   // loadAdmin();
+   loadMembers();
+   loadBikes();
+   loadAdmin();
    int choice = menuChoice(1,4);
    switch (choice){
       case 1:
@@ -48,6 +48,8 @@ void System::mainMenu (){
          loginAdminMenu();
          break;
       case 4:
+         saveBiketoFile();
+         saveMembertoFile();
          //save everything to txt file
          break;
    }
@@ -63,7 +65,7 @@ void System::guestMenu(){
    // loadAdmin();
    std::cout << "1. View motorbike\n";
    std::cout << "2. Sign up\n";
-   std::cout << "3. Back to main menu\n";
+   std::cout << "3. Exit the program\n";
 
    int choice = menuChoice(1,3);
    switch (choice){
@@ -74,7 +76,9 @@ void System::guestMenu(){
          guestRegister();
          break;
       case 3:
-         mainMenu();
+         // mainMenu();
+         // saveBiketoFile();
+         // saveBiketoFile();
          break;
    }
 }
@@ -148,36 +152,28 @@ void System::loginAdminMenu(){
 }
 
 bool System::loginMember(std::string &username, std::string &password){
-   std::string temp;
-   for (Member *mem :memberVector){
+   std::string bkID;
+   for (auto &mem :memberVector){
       if (mem->username == username && mem->password == password) {
-         current_member = mem;
-         if (current_member->bikeID != "null"){
-            temp = current_member->bikeID;
-            for(MotorBike *bike:motorBikesVector){
-               if (bike->bikeID == temp){
-                  current_motorBikes = bike;
-               }
-            }
-         }
+         current_member = mem;   //point at the current member
+         // bkID = current_member->bikeID; 
+         // for (auto &bk : motorBikesVector) {
+         //    if (bk->bikeID == bkID) {
+         //       current_motorBikes = bk;   //point at bike if member have bike
+         //       std::cout << "Found bike"<<std::endl;
+            // } 
+            // else {
+               // std::cout << "Bike not Found" <<std::endl;
+               // current_motorBikes = nullptr;
+            // }
+         // }
+         // current_member->showInfo_M();
+         // current_motorBikes->showBikeInfo();
          return true;
-         /*
-         for (std::string L:LOCATIONS) {  //check for location the app supports
-            if (L == mem->memLocation){
-               count++;
-               break;
-            }
-         }
-
-         if (count == 0){
-            std::cout << "App does not support in this region" << std::endl;
-            mainMenu();
-            return false;
-         }
-         */
       }
+ 
    }
-   return false;    
+   return false;
 };
 bool System::loginAdmin(std::string username, std::string password){
    if (this->admin->username == username && this->admin->password == password) {
@@ -205,14 +201,10 @@ void System::memberMenu() {  //after member login successful
    switch (choice) {
    case 1:
       //rent bike
-      // memberRent();
       rentMenu();
       break;
    case 2:
-      current_member->addBike();  //add new bike to file txt
-      current_member->listBike();
-      loadBikes();   //reload vector to update new bike
-      memberMenu();
+      addBike();  //add new bike to vector
       break;
    case 3:
       //view request
@@ -254,6 +246,8 @@ void System::adminMenu(){  //after admin login successful
       adminViewBike();
       break;
    case 3:
+      saveBiketoFile();
+      saveMembertoFile();
       break;
    }
 }
@@ -285,13 +279,14 @@ void System::loadBikes(){
    while(std::getline(bikeFile,dataLine)) {
       std::vector<std::string> dataList;
       dataList = splitString (dataLine,'|');
-      MotorBike *bike = new MotorBike(dataList[1], dataList[2], std::stoi(dataList[3]),
+      MotorBike *bike = new MotorBike(dataList[0],dataList[1], dataList[2], std::stoi(dataList[3]),
                                       std::stoi(dataList[4]), dataList[5], std::stoi(dataList[6]),
                                       dataList[7], std::stof(dataList[8]), std::stof(dataList[9]),
                                       dataList[10], dataList[11], dataList[12]);
       motorBikesVector.push_back(bike);
    }
    bikeFile.close();
+   std::cout << "Bike file loaded" << std::endl;
 }
 void System::loadMembers(){
    memberVector.clear();
@@ -305,7 +300,7 @@ void System::loadMembers(){
       std::vector<std::string> dataList;
       dataList = splitString (line, '|');
 
-      Member *member = new Member(dataList[0], dataList[1],
+      Member *member = new Member(dataList[0], dataList[1], dataList[2],
                                   dataList[3], dataList[4], dataList[5],
                                   dataList[6], dataList[7], std::stoi(dataList[8]),
                                   dataList[9], dataList[10], std::stof(dataList[11]),
@@ -313,6 +308,8 @@ void System::loadMembers(){
       memberVector.push_back(member);
    }
    memberFile.close();  
+   std::cout << "Member file loaded" << std::endl;
+
 }
 void System::loadAdmin(){
    std::ifstream adminFile{ADMIN_FILE};
@@ -496,7 +493,7 @@ void System::guestViewBike(){
    int choice;
    std::cout << "Continue" << std::endl;
    std::cout << "1. Return to Guest Menu" << std::endl;
-   std::cout << "2. Exit Phe Program" << std::endl;
+   std::cout << "2. Exit the Program" << std::endl;
    choice = menuChoice(1,2);
    switch (choice) {
    case 1:
@@ -600,7 +597,8 @@ void System::guestRegister(){
       std::cout << "-------------------------------------\n";
    } while (!isDateFormat(expDate));
    std::string bikeID = "null";
-   Member *newMember = new Member(username, password, 
+   std::string memID = memberIDgenerate();
+   Member *newMember = new Member(username, password, memID,
                                   fullname, phoneNum, location,
                                   ID_type, ID, INITIAL_CREDIT,
                                   licenseID, expDate, INITIAL_RATING,bikeID);
@@ -719,58 +717,71 @@ bool System::isIDValid(std::string s, int num){
 }
 
 void System::saveMembertoFile(){
+      bool found = false;
       std::ofstream memberFile{MEMBER_FILE};
       if (!memberFile){
          std::cerr << "Couldn't open file " << std::endl;
          return;
       }
-      for (int i = 0; i < memberVector.size(); i++) {
-         memberFile << "\n";
-         memberFile << memberVector[i]->username << "|"
-                    << memberVector[i]->password << "|"
-                    << memberVector[i]->memberID << "|"
-                    << memberVector[i]->fullName << "|"
-                    << memberVector[i]->phoneNumber << "|"
-                    << memberVector[i]->memLocation << "|"
-                    << memberVector[i]->id_type << "|"
-                    << memberVector[i]->IDNum << "|"
-                    << memberVector[i]->credits << "|"
-                    << memberVector[i]->licenseID << "|"
-                    << memberVector[i]->expDate << "|"
-                    << memberVector[i]->memberRating;
-         if (memberVector[i]->own_bike == true) {
-            memberFile << "|" << memberVector[i]->bikeID;
+      for(auto& member : memberVector){
+         memberFile << member->username << "|"
+                    << member->password << "|"
+                    << member->memberID << "|"
+                    << member->fullName << "|"
+                    << member->phoneNumber << "|"
+                    << member->memLocation << "|"
+                    << member->id_type << "|"
+                    << member->IDNum << "|"
+                    << member->credits << "|"
+                    << member->licenseID << "|"
+                    << member->expDate << "|"
+                    << member->memberRating;
+         if (member->memberID == current_member->memberID){
+            if (current_member->own_bike == true){
+               memberFile << "|" << current_member->bikeID;
+            }
          } else {
-            memberFile << "|null";
+            memberFile << "|" << member->bikeID;
          }
+         // if (member->memberID == current_member->memberID){
+         //    if (current_member->own_bike == true){
+         //       memberFile << "|" << current_member->bikeID;
+         //    }
+         // } 
+
+         
+         
+         memberFile << "\n";
    }
    memberFile.close();
+   std::cout << "Member file saved successfully!" << std::endl;
+
 }
 void System::saveBiketoFile(){
-   if (current_member == nullptr) {
-      std::ofstream bikeFile{BIKE_FILE};
-      if (!bikeFile){
+   std::ofstream bikeFile{BIKE_FILE};
+   if (!bikeFile) {
          std::cerr << "Couldn't open file " << BIKE_FILE << std::endl;
          return;
-      }
-      for (int i = 0; i < motorBikesVector.size(); i++) {
-         bikeFile << motorBikesVector[i]->bikeID << "|"
-                  << motorBikesVector[i]->model << "|"
-                  << motorBikesVector[i]->color << "|"
-                  << motorBikesVector[i]->engineSize << "|"
-                  << motorBikesVector[i]->yearMade << "|"
-                  << motorBikesVector[i]->mode << "|"
-                  << motorBikesVector[i]->rentPrice << "|"
-                  << motorBikesVector[i]->location << "|"
-                  << motorBikesVector[i]->bikeRating << "|"
-                  << motorBikesVector[i]->memberRating << "|"
-                  << motorBikesVector[i]->description << "|"
-                  << motorBikesVector[i]->status << "|"
-                  << motorBikesVector[i]->rentDuration
-                  << "\n";
-      }
-      bikeFile.close();
-   } 
+   }
+   // for(auto& bike: motorBikesVector){
+   for (int i = 0; i < motorBikesVector.size(); i++) {
+      bikeFile << motorBikesVector[i]->bikeID << "|"
+               << motorBikesVector[i]->model << "|"
+               << motorBikesVector[i]->color << "|"
+               << motorBikesVector[i]->engineSize << "|"
+               << motorBikesVector[i]->yearMade << "|"
+               << motorBikesVector[i]->mode << "|"
+               << motorBikesVector[i]->rentPrice << "|"
+               << motorBikesVector[i]->location << "|"
+               << motorBikesVector[i]->bikeRating << "|"
+               << motorBikesVector[i]->memberRating << "|"
+               << motorBikesVector[i]->description << "|"
+               << motorBikesVector[i]->status << "|"
+               << motorBikesVector[i]->rentDuration
+               << "\n";
+   }
+   bikeFile.close();
+   std::cout << "Motobike file saved successfully!" << std::endl; 
 }
 /*void System::loadBikeRatings(){
    std::string line;
@@ -848,7 +859,7 @@ void System::saveMemberRatingtoFile(){
 }
 
 void System::rentMenu(){
-   int index = 0;
+   int index = 1;
    int choice;
    std::cout << "Motorbikes available" <<std::endl;
    std::cout << std::left << std::setw(10) << "-Index- "
@@ -861,8 +872,9 @@ void System::rentMenu(){
              << std::left << std::setw(15) << "-Rent Price-"
              << std::endl;
    for (auto bike : motorBikesVector) {
-      if ((bike->location == current_member->memLocation) 
-      && (bike->memberRating < current_member->memberRating)){
+      if ((bike->location == current_member->memLocation)   //fit location
+      && (bike->memberRating < current_member->memberRating)   // above min rating
+      && (current_member->bikeID != bike->bikeID)){   // bike is now own by current member
       std::cout << std::left << std::setw(10) << index
                 << std::left << std::setw(15) << bike->model
                 << std::left << std::setw(15) << bike->color
@@ -912,4 +924,157 @@ std::string stringCut(std::string s){
       }
    }
    return result;
+}
+void System::addBike(){
+   std::string model, color, engineSize, year,
+               mode, price = "0", location, mem_rate = "0",
+               description, status = "", duration = "0";
+   std::cout << "=====================================================" << std::endl;
+   std::cout << "|               -Motorbike Registration-            |" << std::endl;
+   std::cout << "=====================================================" << std::endl;
+   std::cin.ignore();
+   do{
+      std::cout << "Enter Bike model:  "; //bikemodel
+      std::getline(std::cin, model);
+   } while(!isBikeModel(model));
+   
+   do{
+   std::cout <<"Enter color: ";  //color  
+   std::getline(std::cin, color);
+   } while(!isBikecolor(color));
+
+   do {
+      std::cout << "Enter engine size: "; //engine size
+      std::getline(std::cin, engineSize);
+   }while(!isBikeEngineSize(engineSize));
+   
+   do{
+      std::cout << "Enter year made: ";   //yearmade
+      std::getline(std::cin, year);
+   } while (!isYear(year));
+
+   std::cout << "Enter motorbike mode: " << std::endl; //mode
+   std::cout<<"1. Manual\n2. Auto\n3. Unknown" << std::endl;
+   int choice = menuChoice(1,3);
+   switch (choice) {
+      case 1:
+         mode = "Manual";
+         break;
+      case 2:
+         mode = "Auto";
+         break;
+      case 3:
+         mode = "Unknown";
+         break;
+   }
+   std::cout << "Enter motorbike location: "<< std::endl;   //location
+   std::cout <<"1. HN\n2. SG\n3. DN\n";
+   int choice2 = menuChoice(1,3);
+   switch (choice2) {
+      case 1:
+         location = "HN";
+         break;
+      case 2:
+         location = "SG";
+         break;
+      case 3:
+         location = "DN";
+         break;
+   }
+   std::cin.ignore();
+   do {
+      std::cout << "Enter description of the motorbike: "; //description
+      std::getline (std::cin,description);
+   } while (!isBikeModel(description));
+
+   do {
+      std::cout << "Enter your price to rent: ";   //rent price
+      std::getline(std::cin,price);
+   } while (!isRentPrice(price));
+   do {
+      std::cout << "Enter Member minimum rating to rent: " ;   //min member rating
+      std::getline(std::cin, mem_rate);
+   } while(!isMinRating(mem_rate));
+   
+   std::string c;
+   std::cout << "List bike for rent (Y/N): " ;
+   std::cin >> c;
+
+   if (c == "Y" || c == "y"){status = "Available";}
+   else if (c == "N" ||c == "n"){status = "Unavailable";}
+
+   std::string newbikeID = bikeIDgenerate();
+   
+   current_member->bikeID = newbikeID;
+   current_member->own_bike = true;
+   // std::cout << "bike ID" << current_member->bikeID << std::endl;
+   MotorBike *bike = new MotorBike(newbikeID, model, color, std::stoi(engineSize),
+                                 std::stoi(year), mode, std::stoi(price),
+                                 location, INITAIL_BIKE_RATING, std::stof(mem_rate),
+                                 description, status, duration);
+   
+   motorBikesVector.push_back(bike);
+
+   std::cout << "=====================================================" << std::endl;
+   std::cout << "|            Motorbike Added Successfully           |" << std::endl;
+   std::cout << "=====================================================" << std::endl;
+   
+   std::cout << "1. Back to Member Menu" << std::endl;
+   std::cout << "2. Exit the program" << std::endl;
+   int choice3 = menuChoice(1,2);
+   switch (choice3) {
+   case 1:
+      memberMenu();
+      break;
+   case 2:
+      saveBiketoFile();
+      saveMembertoFile(); 
+      break;
+   }
+}
+
+bool System::isYear(std::string s){
+   if (std::stoi(s) < 1900){
+      return false;
+   }
+   return true;
+}
+bool System::isBikeModel(std::string model){
+   for (int i; i < model.length(); i++){
+      // model[i] is not symbol instead of space
+      if (model[i] < 'A' || model[i] > 'Z' && model[i] < 'a' || model[i] > 'z' && model[i] != ' '){
+         return false;
+      }
+   }
+   return true;
+}
+bool System::isBikecolor(std::string color){
+   for (int i; i < color.length(); i++){
+      // color[i] is not symbol instead of space
+      if (color[i] < 'A' || color[i] > 'Z' && color[i] < 'a' || color[i] > 'z' && color[i] != ' '){
+         return false;
+      }
+   }
+   return true;
+}
+bool System::isBikeEngineSize(std::string engineSize){
+    if (std::stoi(engineSize) < 0 ){
+        return false;
+    }
+    return true;
+}
+bool System::isMinRating(std::string rating){
+    if (std::stoi(rating) < 0 || std::stoi(rating) > 10){
+        return false;
+    }
+    return true;
+}
+bool System::isRentPrice(std::string rentPrice){
+   if (std::stoi(rentPrice) < 0){ return false; }
+   for (int i = 0; i < rentPrice.length(); i++) {
+      if (rentPrice[i] < '0' || rentPrice[i] > '9'){
+         return false;
+      }
+   }
+   return true;
 }

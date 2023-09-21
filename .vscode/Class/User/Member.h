@@ -20,7 +20,7 @@ protected:
    int credits;
    float memberRating;  //score
    bool bikeOnRent; //to determine if the bike is available to rent or not
-   bool own_bike;
+   bool own_bike = false;  //default
 public:
    std::string fullName;
    std::string licenseID;
@@ -31,7 +31,7 @@ public:
    //        std::string i_fullName, std::string i_phoneNumber, std::string i_location,
    //        std::string i_id_type, std::string i_IDNum, int i_credits,
    //        std::string i_licenseID, std::string i_expDate, float i_memberRating);
-   Member(std::string i_username, std::string i_password,
+   Member(std::string i_username, std::string i_password, std::string i_memID,
           std::string i_fullName, std::string i_phoneNumber, std::string i_location,
           std::string i_id_type, std::string i_IDNum, int i_credits,
           std::string i_licenseID, std::string i_expDate, float i_memberRating,std::string i_bikeID);
@@ -45,10 +45,10 @@ public:
    // void rentMotorBikes();
    int topUp(); // add addtional money to current account
    // int addBike(MotorBike &bike);
-   void addBike ();  //add entirely new bike to member
+   // void addBike ();  //add entirely new bike to member
 
-   void listBike();  //set status to available and other parameters
-   void unlistBike();   //set status to unavailable and other parameters
+   // bool listBike();  //set status to available and other parameters
+   // bool unlistBike();   //set status to unavailable and other parameters
 
    void sendRequest();
    void viewRequest();  //view all request 
@@ -58,20 +58,18 @@ public:
    void viewHistory(); //view all history rentings
    int menuChoice(int start, int end);
    // int searchBike(std::string bikeID);
-   // void listBike(std::string bikeID);   // list bike to be available
-   // void unlistBike(std::string bikeID); // remove bike from list
-
+   
    // void viewRequest(); // view coming requests from other members
 
    // void review(); // review renter
    // friend class MotorBike;
-   bool numValid(std::string s);
-   bool isYear(std::string s);
-   bool isBikeModel(std::string model);
-   bool isBikecolor(std::string color);
-   bool isBikeEngineSize(std::string engineSize);
-   bool isMinRating(std::string rating);
-   bool isRentPrice(std::string rentPrice);
+   // bool numValid(std::string s);
+   // bool isYear(std::string s);
+   // bool isBikeModel(std::string model);
+   // bool isBikecolor(std::string color);
+   // bool isBikeEngineSize(std::string engineSize);
+   // bool isMinRating(std::string rating);
+   // bool isRentPrice(std::string rentPrice);
 
 
    friend class Admin;
