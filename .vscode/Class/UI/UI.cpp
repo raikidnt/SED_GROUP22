@@ -77,8 +77,8 @@ void System::guestMenu(){
          break;
       case 3:
          // mainMenu();
-         // saveBiketoFile();
-         // saveBiketoFile();
+         saveMembertoFile();
+         saveBiketoFile();
          break;
    }
 }
@@ -194,8 +194,8 @@ void System::memberMenu() {  //after member login successful
    std::cout << "3. View Request" << std::endl; //view upcoming requests
    std::cout << "4. View History" << std::endl; //view history of bike or member
    std::cout << "5. Logout" << std::endl;
-   loadMembers();
-   loadBikes();
+   // loadMembers();
+   // loadBikes();
    // loadAdmin();
    choice = menuChoice(1,5);
    switch (choice) {
@@ -203,7 +203,7 @@ void System::memberMenu() {  //after member login successful
       //rent bike
       rentMenu();
       break;
-   case 2:
+   case 2:  
       addBike();  //add new bike to vector
       break;
    case 3:
@@ -527,9 +527,9 @@ void System::guestRegister(){
    } while (!isPassword(password));
 
    do{
-   std::cout <<"Enter first and last name: ";  //fullname
-   std::getline(std::cin, fullname);
-   std::cout << "-------------------------------------\n";
+      std::cout << "Enter first and last name: "; // fullname
+      std::getline(std::cin, fullname);
+      std::cout << "-------------------------------------\n";
    } while (!isFullname(fullname));
 
    do {
@@ -660,11 +660,8 @@ bool System::isUsername(std::string s){  //no symbol, white space, min length 6
 bool System::isFullname(std::string s){  //no symbol, number,
    std::regex reg ("^[a-zA-Z ]+$"); //only allow letter uppercase and lowercase
    s = stringCut(s);
-   if (std::regex_match(s, reg)){
-      return true;
-   } else {
-      return false;
-   }   
+   if (!std::regex_match(s, reg)){ return false; } 
+   return true;    
 }
 bool System::isDateFormat(std::string s){ //dd/mm/yyyy
    std::string date = s.substr(0,2);
@@ -717,7 +714,6 @@ bool System::isIDValid(std::string s, int num){
 }
 
 void System::saveMembertoFile(){
-      bool found = false;
       std::ofstream memberFile{MEMBER_FILE};
       if (!memberFile){
          std::cerr << "Couldn't open file " << std::endl;
@@ -736,21 +732,20 @@ void System::saveMembertoFile(){
                     << member->licenseID << "|"
                     << member->expDate << "|"
                     << member->memberRating;
-         if (member->memberID == current_member->memberID){
-            if (current_member->own_bike == true){
-               memberFile << "|" << current_member->bikeID;
+         if (current_member != nullptr){
+            if (member->memberID == current_member->memberID){
+               if (current_member->own_bike == true){
+                  memberFile << "|" << current_member->bikeID;
+               }
             }
-         } else {
+            else {
+               memberFile << "|" << member->bikeID;
+            }
+            // memberFile << "\n";
+         }
+         else {
             memberFile << "|" << member->bikeID;
          }
-         // if (member->memberID == current_member->memberID){
-         //    if (current_member->own_bike == true){
-         //       memberFile << "|" << current_member->bikeID;
-         //    }
-         // } 
-
-         
-         
          memberFile << "\n";
    }
    memberFile.close();
@@ -968,17 +963,17 @@ void System::addBike(){
          break;
    }
    std::cout << "Enter motorbike location: "<< std::endl;   //location
-   std::cout <<"1. HN\n2. SG\n3. DN\n";
+   std::cout <<"1. Hanoi\n2. HoChiMinh\n3. Danang\n";
    int choice2 = menuChoice(1,3);
    switch (choice2) {
       case 1:
-         location = "HN";
+         location = "Hanoi";
          break;
       case 2:
-         location = "SG";
+         location = "HoChiMinh";
          break;
       case 3:
-         location = "DN";
+         location = "DaNang";
          break;
    }
    std::cin.ignore();
@@ -997,9 +992,11 @@ void System::addBike(){
    } while(!isMinRating(mem_rate));
    
    std::string c;
-   std::cout << "List bike for rent (Y/N): " ;
-   std::cin >> c;
-
+   do{
+      std::cout << "List bike for rent (Y/N): " ;
+      std::getline (std::cin,c);
+   } while (!ischar(c));
+   
    if (c == "Y" || c == "y"){status = "Available";}
    else if (c == "N" ||c == "n"){status = "Unavailable";}
 
@@ -1034,47 +1031,66 @@ void System::addBike(){
 }
 
 bool System::isYear(std::string s){
-   if (std::stoi(s) < 1900){
-      return false;
+   std::regex reg ("^[0-9 ]+$"); //only allow number
+   std::string str;
+   str = stringCut(s);
+   if(!regex_match(str,reg)){return false;}  //only num
+   if (s.length() != 4) {return false;}   //length of 4
+   return true;
+}
+bool System::isBikeModel(std::string s){ 
+   std::regex reg ("^[a-zA-Z0-9 ]+$"); //only char and num
+   s = stringCut(s);
+   if (!std::regex_match(s, reg)){ return false; }
+   return true;
+}
+bool System::isBikecolor(std::string s){
+   std::regex reg ("^[a-zA-Z ]+$"); //only characters
+   std::string str;
+   str = stringCut(s);
+   if(!regex_match(str,reg)){return false;}    
+   
+   return true;
+}
+bool System::isBikeEngineSize(std::string s){   //only num, >0
+   std::regex reg ("^[0-9 ]+$"); //only allow number
+   std::string str;
+   str = stringCut(s);
+   if(!regex_match(str,reg)){return false;}  //only num
+   if (std::stoi(s) <= 0) {return false;}
+   for (int i = 0; i < s.length(); i++) {
+      if (s[i] == ' ') {return false;}  //no whitespace
+   }
+   
+   return true;
+}
+bool System::isMinRating(std::string s){  //only num, 1-10
+   std::regex reg ("^[0-9. ]+$"); //only allow number
+   std::string str;
+   str = stringCut(s);
+   if(!regex_match(str,reg)){return false;}  //only num
+   if (std::stof(s) < 0 || std::stof(s) > 10){ return false; } //1-10
+   for (int i = 0; i < s.length(); i++) {
+      if (s[i] == ' ') {return false;}  //no whitespace
    }
    return true;
 }
-bool System::isBikeModel(std::string model){
-   for (int i; i < model.length(); i++){
-      // model[i] is not symbol instead of space
-      if (model[i] < 'A' || model[i] > 'Z' && model[i] < 'a' || model[i] > 'z' && model[i] != ' '){
-         return false;
-      }
+bool System::isRentPrice(std::string s){  //only num, no space 
+   std::regex reg ("^[0-9 ]+$"); //only allow number
+   std::string str;
+   str = stringCut(s);
+   if(!regex_match(str,reg)){return false;}  //only num
+   for (int i = 0; i < s.length(); i++) {
+      if (s[i] == ' ') {return false;}  //no whitespace
    }
    return true;
 }
-bool System::isBikecolor(std::string color){
-   for (int i; i < color.length(); i++){
-      // color[i] is not symbol instead of space
-      if (color[i] < 'A' || color[i] > 'Z' && color[i] < 'a' || color[i] > 'z' && color[i] != ' '){
-         return false;
-      }
-   }
+bool System::ischar(std::string s){
+   std::regex reg ("^[ynYN ]+$"); //only char and num
+   std::string str;
+   str = stringCut(s);
+   if (!std::regex_match(s, reg)){ return false; }
+   
    return true;
-}
-bool System::isBikeEngineSize(std::string engineSize){
-    if (std::stoi(engineSize) < 0 ){
-        return false;
-    }
-    return true;
-}
-bool System::isMinRating(std::string rating){
-    if (std::stoi(rating) < 0 || std::stoi(rating) > 10){
-        return false;
-    }
-    return true;
-}
-bool System::isRentPrice(std::string rentPrice){
-   if (std::stoi(rentPrice) < 0){ return false; }
-   for (int i = 0; i < rentPrice.length(); i++) {
-      if (rentPrice[i] < '0' || rentPrice[i] > '9'){
-         return false;
-      }
-   }
-   return true;
+   
 }

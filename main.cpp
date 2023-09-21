@@ -8,6 +8,12 @@ using namespace std;
 int main(int argc, const char *argv[]) {
    System sys;
    sys.mainMenu();
+   
+   // string c; 
+   // cout << "Enter value: " ;
+   // getline(cin,c);
+   // cout << "result = " <<sys.ischar(c)<<endl;
+   
    // cout << sys.isPhoneNum("09238k08391") << endl;
    // cout << sys.isPassword("asdf g1h")<<endl;
    // sys.guestRegister();

@@ -63,13 +63,13 @@ class System {
       bool isIDValid(std::string s,int num); //
 
       bool isYear(std::string s);   //only num, 4 digits, > 1900
-      bool isBikeModel(std::string s); 
-      bool isBikecolor(std::string s); 
+      bool isBikeModel(std::string s);    //limit to certain characters
+      bool isBikecolor(std::string s);    //no num, only char
       bool isBikeEngineSize(std::string s);  //only num, > 0
       bool isMinRating(std::string s); //only num, 1-10
       bool isRentPrice(std::string S); //only num, no char
 
-
+      bool ischar(std::string s);   
 
       void saveMembertoFile();
       void saveBiketoFile();
