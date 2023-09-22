@@ -2,7 +2,6 @@
 #include "../Bike/MotorBike.cpp"
 #include "../User/Member.cpp"
 #include "../User/Admin.cpp"
-// #include "../Request/Request.cpp"
 
 #define BIKE_FILE ".vscode/Data/Bike.txt"
 #define MEMBER_FILE ".vscode/Data/Member.txt"
@@ -93,8 +92,8 @@ void System::loginMemberMenu(){   //before login
    std::cout << "1. Member Login\n";
    std::cout << "2. Back to main menu" << std::endl;
    loadMembers();
-   // loadBikes();
-   // loadAdmin();
+   loadBikes();
+   loadAdmin();
    int choice;
    choice = menuChoice(1,2);
    
@@ -204,11 +203,9 @@ void System::memberMenu() {  //after member login successful
    switch (choice) {
    case 1: //rent bike
       rentMenu();
-      // memberMenu();
       break;
    case 2:  
       addBike();  //add new bike to vector
-      // memberMenu();
       break;
    case 3://view request
       current_member->loadRequest();   //load all reueqst belong to member
@@ -255,20 +252,6 @@ void System::adminMenu(){  //after admin login successful
    }
 }
 
-// void System::listBike(){
-//    for (int i = 0; i < motorBikesVector.size(); i++) {
-//       if (motorBikesVector[i]->bikeID == current_member->bikeID){
-//          motorBikesVector[i]->status = "Available";
-//       } 
-//    }   
-// }
-// void System:: unlistBike(){
-//    for (int i = 0; i < motorBikesVector.size(); i++) {
-//       if (motorBikesVector[i]->bikeID == current_member->bikeID){
-//          motorBikesVector[i]->status = "Unavailable";
-//       } 
-//    }
-// }
 void System::loadBikes(){
    motorBikesVector.clear();
    std::ifstream bikeFile{BIKE_FILE};
@@ -289,7 +272,7 @@ void System::loadBikes(){
       motorBikesVector.push_back(bike);
    }
    bikeFile.close();
-   std::cout << "Bike file loaded" << std::endl;
+   // std::cout << "Bike file loaded" << std::endl;
 }
 void System::loadMembers(){
    memberVector.clear();
@@ -331,6 +314,24 @@ void System::loadAdmin(){
    // std::cout << this->admin. << std::endl;
    adminFile.close();
 }
+// void System::loadRequest(){    
+//    requestVector.clear();    
+//    std::string line;    
+//    std::ifstream requestFile{REQUEST_FILE};     
+//    // requestFile.open(REQUEST_FILE, std::ios::in);    
+//    if(!requestFile.is_open()){       
+//       std::cerr << "Couldn't open 'Request.txt'" << std::endl;    
+//    }    
+//    while (std::getline(requestFile, line)){             
+//       std::vector<std::string> dataList;       
+//       dataList = splitString (line, '|');
+//       Request *request = new Request(dataList[0], dataList[1], dataList[2], 
+//                                      dataList[3], dataList[4], 
+//                                      dataList[5]); // add attributes
+//    requestVector.push_back(request);    
+//    }   
+//    requestFile.close();   
+// }
 
 void System::adminViewMembers(){
    int index = 1;
@@ -806,58 +807,6 @@ void System::saveBiketoFile(){
    bikeFile.close();
    std::cout << "Motobike file saved successfully!" << std::endl; 
 }
-/*void System::loadBikeRatings(){
-   std::string line;
-   std::ifstream file{BIKE_RATING_FILE};
-   if(!file){
-      std::cerr << "Couldn't open file " << std::endl;
-   }
-   while (std::getline(file, line)){      
-      std::vector<std::string> dataList;
-      dataList = splitString (line, '|');
-      BikeRating *newBkRating = new BikeRating(std::stoi(dataList[2]),
-                                               dataList[3]);
-      bikeRatingVector.push_back(newBkRating);
-   }
-   file.close();  
-}*/
-/*void System::loadMemberRatings(){
-   std::string line;
-   std::ifstream file{MEMBER_RATING_FILE};
-   if(!file){
-      std::cerr << "Couldn't open file " << std::endl;
-   }
-   while (std::getline(file, line)){      
-      std::vector<std::string> dataList;
-      dataList = splitString (line, '|');
-      // RenterRating *newRtRating = new RenterRating(dataList[0], dataList[1],
-      //                                              std::stoi(dataList[2]), dataList[3]);
-      // renterRatingVector.push_back(newRtRating);
-   }
-   file.close(); 
-}*/
-
-
-void System::loadRequest(){    
-   requestVector.clear();    
-   std::string line;    
-   std::ifstream requestFile{REQUEST_FILE};     
-   // requestFile.open(REQUEST_FILE, std::ios::in);    
-   if(!requestFile.is_open()){       
-      std::cerr << "Couldn't open 'Request.txt'" << std::endl;    
-   }    
-   while (std::getline(requestFile, line)){             
-      std::vector<std::string> dataList;       
-      dataList = splitString (line, '|');
-      Request *request = new Request(dataList[0], dataList[1], dataList[2], 
-                                     dataList[3], dataList[4], 
-                                     dataList[5]); // add attributes
-   requestVector.push_back(request);    
-   }   
-   requestFile.close();   
-}
-
-
 void System::saveBikeRatingtoFile(){
    std::ofstream file{BIKE_RATING_FILE};
    if(!file){
@@ -934,13 +883,14 @@ void System::rentMenu(){
             std::cout << "bike ID = "<< bk->bikeID << std::endl;
             std::cout << "rent price = "<< bk->rentPrice << std::endl;
             current_member->sendRequest(bk->bikeID, bk->rentPrice);
-            current_member->saveRequesttoFile();
+            current_member->addRequesttoFile();
             
             for (int i = 0; i < memberVector.size(); i++) {
                if(current_member->memberID == memberVector[i]->memberID){
                   memberVector[i] = current_member;   //update to vector
                }
             }
+            // loadRequest()
             saveMembertoFile();  //update to file
          }
       }
@@ -1141,30 +1091,6 @@ bool System::ischar(std::string s){
    
 }
 
-
-void System::rentBike(){
-   // std::string requestID, renterID, startdate, returndate, status="", bikeID;
-   // requestID = requestIDgenerate();
-
-   // renterID = current_member->memberID;
-   // bikeID = current_member->bikeID;
-   // do {
-   //    do {
-   //       std::cout << "Enter start day to rent: ";
-   //       std::getline(std::cin, startdate);
-   //    } while (!isDateFormat(startdate));
-   //    do {
-   //       std::cout << "Enter day of return : ";
-   //       std::getline(std::cin, returndate);
-   //    } while (!isDateFormat(returndate));
-   // } while(!isDateGood(startdate,returndate));
-
-   // Request *rqst = new Request(requestID, renterID,
-   //                             returndate, startdate,
-   //                             bikeID, status);
-   // requestVector.push_back(rqst);
-}
-
 void System::viewHistory(){ //view who rent the bike before
    std::cout << "Choose:"<< std::endl;
    std::cout << "1. History of own bike" << std::endl;
@@ -1179,19 +1105,3 @@ void System::viewHistory(){ //view who rent the bike before
          break;
    }
 }
-
-
-// bool isDateGood(std::string start,std::string end){
-//    std::string sdate = start.substr(0,2);
-//    std::string smonth = start.substr(3,2);
-//    std::string syear = start.substr(6,4);
-   
-//    std::string edate = end.substr(0,2);
-//    std::string emonth = end.substr(3,2);
-//    std::string eyear = end.substr(6,4);
-//    if ((std::stoi(eyear) - std::stoi(syear)) < 0) { return false; }
-//    if ((std::stoi(emonth) - std::stoi(smonth)) < 0) { return false; }
-//    if ((std::stoi(edate) - std::stoi(sdate)) < 0) { return false; }
-//    return true;
-
-// }

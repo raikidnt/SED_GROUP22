@@ -4,9 +4,11 @@
 #include "../RentHistory/RentHistory.cpp"
 
 #define INITAIL_BIKE_RATING 10.0
+
 #define BIKE_FILE ".vscode/Data/Bike.txt"
 #define REQUEST_FILE ".vscode/Data/Request.txt"
 #define HISTORY_FILE ".vscode/Data/History.txt"
+
 std::string memberIDgenerate(){
    srand(time(NULL));
    int num = rand() % 1001; //random number form 0-100
@@ -39,7 +41,7 @@ void Member::showInfo_M(){
 
 void Member::viewRequest(){
    int index = 0;
-   int order= 1;
+   int order= 0;
    std::vector<int>track;
    int choice,choice2;
    std::cout << "All requests" << std::endl;
@@ -62,10 +64,11 @@ void Member::viewRequest(){
                << std::left << std::setw(15) << rqst->status
                << std::endl;
       order++; //for show only
+      track.push_back(index); //remember which bike at which index is show on list
       }
       index++;
-      track.push_back(index); //remember which bike at which index is show on list
    }
+   std::cout << "-----------------------------------------------------" <<std::endl;
    std::cout << "Menu:  " << std::endl;
    std::cout << "1. Select request " << std::endl;
    std::cout << "2. Back to Member menu " << std::endl;
@@ -73,7 +76,7 @@ void Member::viewRequest(){
 
    switch (choice) {
    case 1:
-      choice2 = menuChoice2(1, order, track);      //index of the request in vector   
+      choice2 = menuChoice2(0, order, track);      //index of the request in vector   
       
       acceptRequest(choice2); //set status of the request
       break;
@@ -145,7 +148,7 @@ void Member::loadRequest(){
    requestVector.push_back(request);    
    }    
    requestFile.close();   
-   std::cout <<"Load successful: " << requestVector.size() <<std::endl;
+   // std::cout <<"Load successful: " << requestVector.size() <<std::endl;
 }
 void Member::sendRequest(std::string ownerbikeID, int price){
    requestVector.clear();
@@ -167,13 +170,15 @@ void Member::sendRequest(std::string ownerbikeID, int price){
                                returndate, startdate,
                                ownerbikeID, status);
    requestVector.push_back(rqst);
-   
+   // addRequesttoFile();
+   // loadRequest();
    int day = rqst->getDiff(startdate, returndate);
    this->credits = this->credits - day*price;
    if (this->credits < 0) {
       std::cout << "Insufficient credit.Current balance:  " <<this->credits << std::endl;
       topUp();
    }
+
    std::cout << "=====================================================" << std::endl;
    std::cout << "|            Request Send Successfully             |" << std::endl;
    std::cout << "=====================================================" << std::endl;
@@ -188,7 +193,26 @@ void Member::saveRequesttoFile(){
       return;
    }
    for (int i = 0; i < requestVector.size(); i++) {
-      
+      requestFile << requestVector[i]->requestID << "|"
+                  << requestVector[i]->renterID << "|"
+                  << requestVector[i]->returnDate << "|"
+                  << requestVector[i]->startDate << "|"
+                  << requestVector[i]->bike_id << "|"
+                  << requestVector[i]->status
+                  << "\n";
+   }
+   requestFile.close();
+   // std::cout << "save done" << std::endl;
+}
+void Member::addRequesttoFile(){
+   // std::ofstream requestFile{REQUEST_FILE};
+   std::fstream requestFile;
+   requestFile.open(REQUEST_FILE,std::ios::app);
+   if (!requestFile){
+      std::cerr << "Couldn't open file " << REQUEST_FILE << std::endl;
+      return;
+   }
+   for (int i = 0; i < requestVector.size(); i++) {
       requestFile << requestVector[i]->requestID << "|"
                   << requestVector[i]->renterID << "|"
                   << requestVector[i]->returnDate << "|"
@@ -305,7 +329,9 @@ void Member::acceptRequest(int choice2){
          break;
       case 2:
          requestVector[choice2]->status = "DECLINED";
+         break;
    }
+
    saveRequesttoFile();
    loadRequest();
 }
@@ -347,6 +373,7 @@ void Member::viewBikeHistory(){
          index++;
       }
    }
+   std::cout << "-----------------------------------------------------" <<std::endl;
 }
 void Member::viewMemberHistory(){
    int index = 1;
@@ -367,4 +394,6 @@ void Member::viewMemberHistory(){
       index++;
       }
    }
+   std::cout << "-----------------------------------------------------" <<std::endl;
+
 }

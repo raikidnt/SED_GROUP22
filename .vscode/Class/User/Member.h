@@ -24,6 +24,7 @@ private:
    bool own_bike = false;  //default
    
    std::vector <Request*> requestVector;
+   Request *currentRequest;
    std::vector <RentHis*> RentHisVect;
 public:
    std::string fullName;
@@ -31,25 +32,14 @@ public:
    std::string expDate;
 
    Member();
-   // Member(std::string i_username, std::string i_password,
-   //        std::string i_fullName, std::string i_phoneNumber, std::string i_location,
-   //        std::string i_id_type, std::string i_IDNum, int i_credits,
-   //        std::string i_licenseID, std::string i_expDate, float i_memberRating);
    Member(std::string i_username, std::string i_password, std::string i_memID,
           std::string i_fullName, std::string i_phoneNumber, std::string i_location,
           std::string i_id_type, std::string i_IDNum, int i_credits,
           std::string i_licenseID, std::string i_expDate, float i_memberRating,std::string i_bikeID);
 
-   // int MemberLogin(std::string username, std::string password);   
-   // int MemberLogout();
-   
    void showInfo_M();
 
-   // void viewMotorBikes();
-   // void rentMotorBikes();
    void topUp(); // add addtional money to current account
-   // int addBike(MotorBike &bike);
-   // void addBike ();  //add entirely new bike to member
 
    std::string listBike();  //set status to available and other parameters
    std::string unlistBike();   //set status to unavailable and other parameters
@@ -59,19 +49,16 @@ public:
    void loadHistory();
    void viewRequest();  //view request belong to member
    void acceptRequest(int choice);
-   // void declineRequest();
-   int cost(std::string startday,std::string endday);
    void viewBikeHistory();
    void viewMemberHistory();
+   void addRequesttoFile();
 
    void saveRequesttoFile();
    int menuChoice(int start, int end);
    int menuChoice2 (int start, int end, std::vector<int>track);
-   // int searchBike(std::string bikeID);
    bool ischar(std::string s);
    bool isNum(std::string s);
    bool numValid(std::string input);
-   // void viewRequest(); // view coming requests from other members
 
    // void review(); // review renter
    // friend class MotorBike;
@@ -89,7 +76,6 @@ public:
 
    friend class Request;
    friend class BikeRating;
-   friend void RateBike();
    friend class RateRenter;
 };
 std::string memberIDgenerate();
