@@ -11,7 +11,6 @@ class Request {
    protected:
       std::string requestID; // auto generated
       std::string renterID;   //member who rent
-      std::string ownerID; //owner of the bike
       std::string startDate;
       std::string returnDate;
       std::string bike_id; //bike want to rent
