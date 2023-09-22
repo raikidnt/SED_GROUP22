@@ -6,7 +6,7 @@
 #include "../User/Admin.h"
 #include "../bikeRating/bikeRating.h"
 #include "../renterRating/renterRating.h"
-#include "../Request/Request.h"
+// #include "../Request/Request.h"
 class System {
    private:
       std::vector<Member*> memberVector;
@@ -33,24 +33,33 @@ class System {
 
       void memberMenu(); //after login as member
       void adminMenu();  //after login as admin
-      void addBike(); //add bike to system
+      
+      
+      //dataloading function
       void loadMembers();   //get all member info into vector
       void loadBikes();  //get all bike info into vector
       void loadAdmin(); //get admin to system
-      
-      // void loadBikeRatings();    //get all bike ratings into vector
-      // void loadMemberRatings();  //get all member ratings into vector
-      // void loadRequests(); //get all requests into vector
-
+      void loadRequest(); //get all requests into vector
+      void loadBikeRatings();    //get all bike ratings into vector
+      void loadMemberRatings();  //get all member ratings into vector
+      //admin function
       void adminViewBike();
       void adminViewMembers();
-
-      int menuChoice(int start, int end); //check for valid input (only number within range)
-
-      bool numValid(std::string input);   //check for input a number
-
+      //guest function
       void guestViewBike();
       void guestRegister();
+      //member function
+      void addBike(); //add bike to system
+      void rentBike(); //
+      void viewBikeHistory(); // history of bike
+      void viewRentHistory();//history of member
+      
+
+      int menuChoice(int start, int end); //check for valid input (only number within range)
+      int menuChoice2(int start, int end, std::vector<int>);
+      bool numValid(std::string input);   //check for input a number
+
+      
       void listBikeMenu();
       void unlistBikeMenu();
       
@@ -68,16 +77,16 @@ class System {
       bool isBikeEngineSize(std::string s);  //only num, > 0
       bool isMinRating(std::string s); //only num, 1-10
       bool isRentPrice(std::string S); //only num, no char
-
       bool ischar(std::string s);   
 
+      // bool isDateGood(std::string start, std::string end);
+      
       void saveMembertoFile();
       void saveBiketoFile();
-
+      // void saveRequesttoFile();
       void saveBikeRatingtoFile();
       void saveMemberRatingtoFile();
 
-      
       void rentMenu(); //show bike base on current member location and rating
       friend class Member;
 };

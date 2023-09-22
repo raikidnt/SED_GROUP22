@@ -2,9 +2,6 @@
 #define RENT_HISTORY_H
 #include <bits/stdc++.h>
 #include <../Request/Request.h>
-#include <string>
-
-
 
 
 class RentHis : public Request{
