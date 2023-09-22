@@ -7,20 +7,23 @@
 // #include "../Bike/MotorBike.h"
 
 std::string requestIDgenerate(){
-   // srand(time(NULL));
+   srand(time(NULL));
    int num = rand() % 1001; //random number form 0-1000
-   return ("Rqst - " + std::to_string(num));
+   return ("Rqst-" + std::to_string(num));
 };
 
 Request::Request(){};
-Request::Request(std::string requestID, std::string renterID,
-                 std::string returnDate, std::string startDate,
-                 STATUS status, std::string bike_id, int check)
-    : requestID(requestID), renterID(renterID),
-      returnDate(returnDate), status(status),
-      startDate(startDate), bike_id(bike_id), check(check)
+Request::Request(std::string i_requestID, std::string i_renterID,
+                 std::string i_returnDate, std::string i_startDate,
+                 std::string i_bike_id, std::string i_status)
+    : requestID(i_requestID), renterID(i_renterID),
+      returnDate(i_returnDate), startDate(i_startDate), 
+      bike_id(i_bike_id), status(i_status)
 {
     // renterID = IDNum; 
+    if (i_status == "PENDING") {
+        requestID = requestIDgenerate();
+    }
 };
 
 void Request::setRequestID(std::string requestID){
@@ -38,9 +41,9 @@ void Request::setStartDate(std::string startDate){
 void Request::setbikeID(std::string bike_id){
     this->bike_id = bike_id;
 }
-void Request::updateRequest(int check){
-    this->check = check;
-}
+// void Request::updateRequest(int check){
+//     this->check = check;
+// }
 
 std::vector<std::string> splitDate(std::string &date, char splitChar){
     std::stringstream ss(date);
@@ -157,12 +160,12 @@ void Request::sentrequest(std::string i_renterID){
     }
     if(check == true){
         Request *req = new Request();
-        req->setbikeID(Bikeid);
-        req->setRenterID(i_renterID);
-        req->setStartDate(startDate);
-        req->setReturnDate(returnDate);
-        req->setRequestID(requestIDgenerate());
-        req->getDiff(startDate, returnDate);
+        // req->setbikeID(Bikeid);
+        // req->setRenterID(i_renterID);
+        // req->setStartDate(startDate);
+        // req->setReturnDate(returnDate);
+        // req->setRequestID(requestIDgenerate());
+        // req->getDiff(startDate, returnDate);
         std::cout << "Request has been sent." << std::endl;
         delete[] req;
     } 
@@ -174,32 +177,32 @@ void Request::sentrequest(std::string i_renterID){
 
 
     
-void Request::checkRequest(){
-    Request *req = new Request();
-    int temp;
-    std::cout << "RequestID: " << requestID << std::endl;
-    std::cout << "Bike ID: " << bike_id << std::endl;
-    std::cout<< "Renter ID: " << renterID << std::endl;
-    std::cout << "Start Date: " << startDate << std::endl;
-    std::cout<< "Return Date: " << returnDate << std::endl;
-    std::cout<< std::endl;
-    do {
-        std::cout<< "Press 1 to accept or 0 to reject the request: ";
-        std::cin >> temp;
+// void Request::checkRequest(){
+//     Request *req = new Request();
+//     int temp;
+//     std::cout << "RequestID: " << requestID << std::endl;
+//     std::cout << "Bike ID: " << bike_id << std::endl;
+//     std::cout<< "Renter ID: " << renterID << std::endl;
+//     std::cout << "Start Date: " << startDate << std::endl;
+//     std::cout<< "Return Date: " << returnDate << std::endl;
+//     std::cout<< std::endl;
+//     do {
+//         std::cout<< "Press 1 to accept or 0 to reject the request: ";
+//         std::cin >> temp;
 
-        if(temp == 1){
-           std::cout<< "You have accepted the request." << std::endl;
-            req->updateRequest(temp);
-        } else if (temp == 0){
-           std::cout<< "You have rejected the request." << std::endl;
-        } else if (temp != 0 && temp != 1){
-            std::cout << "Invalid choice please try again." << std::endl; 
-        }
-    }while (temp != 0 && temp != 1);
-}
+//         if(temp == 1){
+//            std::cout<< "You have accepted the request." << std::endl;
+//             req->updateRequest(temp);
+//         } else if (temp == 0){
+//            std::cout<< "You have rejected the request." << std::endl;
+//         } else if (temp != 0 && temp != 1){
+//             std::cout << "Invalid choice please try again." << std::endl; 
+//         }
+//     }while (temp != 0 && temp != 1);
+// }
 
 
-int Request::rentTotal(){
+// int Request::rentTotal(){
 
    
-}
+// }

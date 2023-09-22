@@ -21,3 +21,4 @@ Bk-951|nnn|red|3455|2019|Unknown|4|Hanoi|10|3|good condtional|Available|0
 Bk-368|bike for nhu|blue|890|3400|Manual|4|HoChiMinh|10|2.5|good condition|Available|0
 Bk-141|bikeforkhoi|ewss|200|2018|Manual|6|HoChiMinh|10|8|perfect|Unavailable|0
 Bk-155|Futures 125|black|125|2020|Manual|7|HoChiMinh|10|8|perfect condition|Available|0
+Bk-539|newbike|red|223|2019|Auto|5|DaNang|10|3.5|good condition|Unavailable|0

@@ -4,11 +4,11 @@
 #include "User.h"
 #include "../Bike/MotorBike.h"
 #include <bits/stdc++.h>
+#include "../Request/Request.h"
 std::string LOCATIONS[3] = {"HN", "SG", "DN"};
+
 class Member : public User {
-protected:
-   // std::string member_username;
-   // std::string member_password;
+private:
    std::string memberID;   //auto-generated
    std::string phoneNumber; 
    std::string id_type;
@@ -21,6 +21,8 @@ protected:
    float memberRating;  //score
    bool bikeOnRent; //to determine if the bike is available to rent or not
    bool own_bike = false;  //default
+   
+   std::vector <Request*> requestVector;
 public:
    std::string fullName;
    std::string licenseID;
@@ -43,22 +45,27 @@ public:
 
    // void viewMotorBikes();
    // void rentMotorBikes();
-   int topUp(); // add addtional money to current account
+   void topUp(); // add addtional money to current account
    // int addBike(MotorBike &bike);
    // void addBike ();  //add entirely new bike to member
 
-   // bool listBike();  //set status to available and other parameters
-   // bool unlistBike();   //set status to unavailable and other parameters
+   std::string listBike();  //set status to available and other parameters
+   std::string unlistBike();   //set status to unavailable and other parameters
 
-   void sendRequest();
-   void viewRequest();  //view all request 
-   void acceptRequest();
-   void declineRequest();
+   void sendRequest(std::string ownerbikeID);
+   void loadRequest();
+   void viewRequest();  //view request belong to member
+   void acceptRequest(int choice);
+   // void declineRequest();
    
+   void saveRequesttoFile();
    void viewHistory(); //view all history rentings
    int menuChoice(int start, int end);
+   int menuChoice2 (int start, int end, std::vector<int>track);
    // int searchBike(std::string bikeID);
-   
+   bool ischar(std::string s);
+   bool isNum(std::string s);
+   bool numValid(std::string input);
    // void viewRequest(); // view coming requests from other members
 
    // void review(); // review renter
@@ -81,4 +88,7 @@ public:
    friend class RateRenter;
 };
 std::string memberIDgenerate();
+bool isDateFormat(std::string s);
+bool isDateGood(std::string start,std::string end);
+
 #endif

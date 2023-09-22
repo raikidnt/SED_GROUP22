@@ -3,6 +3,7 @@
 #include "../Bike/MotorBike.cpp"
 #include "../User/Member.cpp"
 #include "../User/Admin.cpp"
+// #include "../Request/Request.cpp"
 
 #define BIKE_FILE ".vscode/Data/Bike.txt"
 #define MEMBER_FILE ".vscode/Data/Member.txt"
@@ -153,7 +154,7 @@ void System::loginAdminMenu(){
 
 bool System::loginMember(std::string &username, std::string &password){
    std::string bkID;
-   for (auto &mem :memberVector){
+   for (Member *mem :memberVector){
       if (mem->username == username && mem->password == password) {
          current_member = mem;   //point at the current member
          // bkID = current_member->bikeID; 
@@ -197,18 +198,19 @@ void System::memberMenu() {  //after member login successful
    // loadMembers();
    // loadBikes();
    // loadAdmin();
+   current_member->loadRequest();   //load all reueqst belong to member
    choice = menuChoice(1,5);
    switch (choice) {
-   case 1:
-      //rent bike
+   case 1: //rent bike
       rentMenu();
       break;
    case 2:  
       addBike();  //add new bike to vector
       break;
-   case 3:
-      //view request
-      // current_member.viewRequest();
+   case 3://view request
+      current_member->loadRequest();   //load all reueqst belong to member
+
+      current_member->viewRequest();
       break;
    case 4:
       //view history of member 
@@ -463,6 +465,32 @@ int System::menuChoice(int start, int end) {
       }
    } while (!flag);
    return finalChoice;
+};
+int System::menuChoice2(int start, int end,std::vector<int> vect) { 
+   int finalChoice;
+   bool flag;
+   std::string tempo;
+   do{
+      std::cout << "Enter your bike choice: ";
+      std::cin >> tempo;
+      if (numValid(tempo)){   //check if the input is number
+         std::cout <<"Only enter number as choice! Try again!"<<std::endl;
+         flag = false;
+         continue;
+      }
+      finalChoice = std::stoi(tempo);
+      for (int i = 0; i < vect.size(); i++) {
+         if (finalChoice > (vect.size() + 1) || finalChoice < 0) {
+            std::cout << "Enter choice in the range " << start << " - " << end << " only!" << std::endl;
+            flag = false;
+         }
+         else
+         {
+            flag = true;
+         }
+      }
+   } while (!flag);
+   return vect[finalChoice];
 };
 
 void System::guestViewBike(){
@@ -809,21 +837,26 @@ void System::saveBiketoFile(){
    file.close(); 
 }*/
 
-/*void System::loadRequests(){
-std::string line;
-   std::ifstream file{REQUEST_FILE};
-   if(!file){
-      std::cerr << "Couldn't open file " << std::endl;
-   }
-   while (std::getline(file, line)){      
-      std::vector<std::string> dataList;
-      dataList = splitString (line, '|');
-      Request *newRequest = new Request();
 
-      requestVector.push_back(newRequest);
-   }
-   file.close();
-}*/
+void System::loadRequest(){    
+   requestVector.clear();    
+   std::string line;    
+   std::ifstream requestFile{REQUEST_FILE};     
+   // requestFile.open(REQUEST_FILE, std::ios::in);    
+   if(!requestFile.is_open()){       
+      std::cerr << "Couldn't open 'Request.txt'" << std::endl;    
+   }    
+   while (std::getline(requestFile, line)){             
+      std::vector<std::string> dataList;       
+      dataList = splitString (line, '|');
+      Request *request = new Request(dataList[0], dataList[1], dataList[2], 
+                                     dataList[3], dataList[4], 
+                                     dataList[5]); // add attributes
+   requestVector.push_back(request);    
+   }   
+   requestFile.close();   
+}
+
 
 void System::saveBikeRatingtoFile(){
    std::ofstream file{BIKE_RATING_FILE};
@@ -854,8 +887,10 @@ void System::saveMemberRatingtoFile(){
 }
 
 void System::rentMenu(){
-   int index = 1;
-   int choice;
+   int index = 0;
+   int order= 1;
+   std::vector<int>track;
+   int choice,choice2;
    std::cout << "Motorbikes available" <<std::endl;
    std::cout << std::left << std::setw(10) << "-Index- "
              << std::left << std::setw(15) << "-Model-"
@@ -867,33 +902,41 @@ void System::rentMenu(){
              << std::left << std::setw(15) << "-Rent Price-"
              << std::endl;
    for (auto bike : motorBikesVector) {
-      if ((bike->location == current_member->memLocation)   //fit location
-      && (bike->memberRating < current_member->memberRating)   // above min rating
-      && (current_member->bikeID != bike->bikeID)){   // bike is now own by current member
-      std::cout << std::left << std::setw(10) << index
-                << std::left << std::setw(15) << bike->model
-                << std::left << std::setw(15) << bike->color
-                << std::left << std::setw(20) << bike->engineSize
-                << std::left << std::setw(15) << bike->yearMade
-                << std::left << std::setw(15) << bike->mode
-                << std::left << std::setw(15) << bike->location
-                << std::left << std::setw(15) << bike->rentPrice
-                << std::endl;
-      index++;
+      if ((bike->location == current_member->memLocation)        // fit location
+          && (bike->memberRating < current_member->memberRating) // above min rating
+          && (bike->bikeID != current_member->bikeID)) { // not list current member bike
+            std::cout << std::left << std::setw(10) << order
+                      << std::left << std::setw(15) << bike->model
+                      << std::left << std::setw(15) << bike->color
+                      << std::left << std::setw(20) << bike->engineSize
+                      << std::left << std::setw(15) << bike->yearMade
+                      << std::left << std::setw(15) << bike->mode
+                      << std::left << std::setw(15) << bike->location
+                      << std::left << std::setw(15) << bike->rentPrice
+                      << std::endl;
+      order++; //for show only
       }
+      index++;
+      track.push_back(index); //remember which bike at which index is show on list
    }
-   
-   // if (index == 0){
-   //    std::cout << "No bike available for you " << std::endl;
-   // } else {
-   
+
    std::cout << "Menu:  " << std::endl;
    std::cout << "1. Select bike to rent " << std::endl;
    std::cout << "2. Back to Member menu " << std::endl;
    choice = menuChoice(1,2);
    switch (choice) {
    case 1:
-      // current_member->sendRequest();
+      std::cin.ignore();
+      choice2 = menuChoice2(1, order, track);      
+      for (MotorBike *bk : motorBikesVector){
+         if (bk->bikeID == motorBikesVector[choice2]->bikeID){
+            std::cin.ignore();
+            current_member->sendRequest(bk->bikeID);
+            current_member->saveRequesttoFile();
+         }
+      }
+
+      memberMenu();
       break;
    case 2:
       memberMenu();
@@ -991,11 +1034,7 @@ void System::addBike(){
       std::getline(std::cin, mem_rate);
    } while(!isMinRating(mem_rate));
    
-   std::string c;
-   do{
-      std::cout << "List bike for rent (Y/N): " ;
-      std::getline (std::cin,c);
-   } while (!ischar(c));
+   std::string c = current_member->listBike();
    
    if (c == "Y" || c == "y"){status = "Available";}
    else if (c == "N" ||c == "n"){status = "Unavailable";}
@@ -1094,3 +1133,66 @@ bool System::ischar(std::string s){
    return true;
    
 }
+
+
+void System::rentBike(){
+   // std::string requestID, renterID, startdate, returndate, status="", bikeID;
+   // requestID = requestIDgenerate();
+
+   // renterID = current_member->memberID;
+   // bikeID = current_member->bikeID;
+   // do {
+   //    do {
+   //       std::cout << "Enter start day to rent: ";
+   //       std::getline(std::cin, startdate);
+   //    } while (!isDateFormat(startdate));
+   //    do {
+   //       std::cout << "Enter day of return : ";
+   //       std::getline(std::cin, returndate);
+   //    } while (!isDateFormat(returndate));
+   // } while(!isDateGood(startdate,returndate));
+
+   // Request *rqst = new Request(requestID, renterID,
+   //                             returndate, startdate,
+   //                             bikeID, status);
+   // requestVector.push_back(rqst);
+}
+
+void System::viewBikeHistory(){ //view who rent the bike before
+   int index = 0;
+   std::cout << "Motorbikes History" <<std::endl;
+   std::cout << std::left << std::setw(10) << "-Index- "
+             << std::left << std::setw(15) << "-RequestID-"
+             << std::left << std::setw(15) << "-Startday-"
+             << std::left << std::setw(20) << "-Return day-"
+             << std::left << std::setw(15) << "-Duration -"
+             << std::left << std::setw(15) << "-Renter-"
+             << std::left << std::setw(15) << "-Rating-"
+             << std::left << std::setw(15) << "-Score-"
+             << std::endl;
+   // for()
+   // std::cout << std::left << std::setw(10) << index
+   //           << std::left << std::setw(10) << 
+   //           << std::left << std::setw(10) << "-Index- "
+
+   //     index++;
+   // }
+}
+void System::viewRentHistory(){ // view bike that rent by current member
+
+}
+
+// bool isDateGood(std::string start,std::string end){
+//    std::string sdate = start.substr(0,2);
+//    std::string smonth = start.substr(3,2);
+//    std::string syear = start.substr(6,4);
+   
+//    std::string edate = end.substr(0,2);
+//    std::string emonth = end.substr(3,2);
+//    std::string eyear = end.substr(6,4);
+//    if ((std::stoi(eyear) - std::stoi(syear)) < 0) { return false; }
+//    if ((std::stoi(emonth) - std::stoi(smonth)) < 0) { return false; }
+//    if ((std::stoi(edate) - std::stoi(sdate)) < 0) { return false; }
+//    return true;
+
+// }
