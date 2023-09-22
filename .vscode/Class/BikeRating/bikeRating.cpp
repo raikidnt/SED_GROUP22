@@ -7,8 +7,10 @@ std::string BikeRatingIDgenerate(){
 }
 
 BikeRating::BikeRating(){}
-
-BikeRating::BikeRating(int i_score, std::string i_comment) : score(i_score), comment(i_comment) {}
+BikeRating::BikeRating(std::string i_comment, int i_score)
+    : comment(i_comment), score(i_score) {
+      
+    }
 // void BikeRating::setRateBikeID(std::string rateBikeID){
 //     this->rateBikeID = rateBikeID;
 // }

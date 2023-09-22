@@ -1,10 +1,12 @@
 #include "Member.h"  //include header
 #include "User.cpp"  //include parent cpp files
+#include "../Request/Request.cpp"
+#include "../RentHistory/RentHistory.cpp"
+
 #define INITAIL_BIKE_RATING 10.0
 #define BIKE_FILE ".vscode/Data/Bike.txt"
 #define REQUEST_FILE ".vscode/Data/Request.txt"
-#include "../Request/Request.cpp"
-
+#define HISTORY_FILE ".vscode/Data/History.txt"
 std::string memberIDgenerate(){
    srand(time(NULL));
    int num = rand() % 1001; //random number form 0-100
@@ -13,17 +15,6 @@ std::string memberIDgenerate(){
 
 Member::Member(){} //default constructor
 
-// Member::Member(std::string i_username = "", std::string i_password = "",
-//                std::string i_fullName = "", std::string i_phoneNumber = "", std::string i_location = "",
-//                std::string i_id_type = "", std::string i_IDNum = "", int i_credits = 0,
-//                std::string i_licenseID = "", std::string i_expDate = "", float i_memberRating = 0)
-//     : User(i_username, i_password), 
-//       fullName(i_fullName), phoneNumber(i_phoneNumber), memLocation(i_location),
-//       id_type(i_id_type), IDNum(i_IDNum), credits(i_credits),
-//       licenseID(i_licenseID), expDate(i_expDate), memberRating(i_memberRating)
-// {
-//    memberID = memberIDgenerate();
-// }
 Member::Member(std::string i_username = "", std::string i_password = "", std::string i_memID="",
                std::string i_fullName = "", std::string i_phoneNumber = "", std::string i_location = "",
                std::string i_id_type = "", std::string i_IDNum = "", int i_credits = 0,
@@ -60,8 +51,10 @@ void Member::viewRequest(){
              << std::left << std::setw(15) << "-Status-"
              << std::endl;
    for (Request *rqst : requestVector) {
-      if (this->bikeID == rqst->bike_id){ //if this member bike is equal to the request bike then show info
-         std::cout << std::left << std::setw(10) << index
+      // std::cout << "rsqst bikeID: "  << rqst->bike_id << "\t";
+      // std::cout << "this bikeID: "  << this->bikeID <<std::endl;
+      if (rqst->bike_id == this->bikeID){ //if this member bike is equal to the request bike then show info
+         std::cout << std::left << std::setw(10) << order
                << std::left << std::setw(15) << rqst->requestID
                << std::left << std::setw(15) << rqst->startDate
                << std::left << std::setw(20) << rqst->returnDate
@@ -77,14 +70,12 @@ void Member::viewRequest(){
    std::cout << "1. Select request " << std::endl;
    std::cout << "2. Back to Member menu " << std::endl;
    choice = menuChoice(1,2);
+
    switch (choice) {
    case 1:
-      std::cin.ignore();
-      choice2 = menuChoice2(1, order, track);      //index of the request in vector
+      choice2 = menuChoice2(1, order, track);      //index of the request in vector   
       
-      
-      // acceptRequest(choice2); //set status of the request
-
+      acceptRequest(choice2); //set status of the request
       break;
    case 2:
       break;
@@ -154,12 +145,10 @@ void Member::loadRequest(){
    requestVector.push_back(request);    
    }    
    requestFile.close();   
-   std::cout <<"Load successful" << std::endl;
+   std::cout <<"Load successful: " << requestVector.size() <<std::endl;
 }
-void Member::sendRequest(std::string ownerbikeID){
+void Member::sendRequest(std::string ownerbikeID, int price){
    requestVector.clear();
-   std::cout << "before"<<requestVector.size() <<std::endl;
-
    std::string requestID, renterID, 
    startdate, returndate, status = "PENDING";
    renterID = this->memberID;   
@@ -178,14 +167,22 @@ void Member::sendRequest(std::string ownerbikeID){
                                returndate, startdate,
                                ownerbikeID, status);
    requestVector.push_back(rqst);
-   std::cout << requestVector.size() <<std::endl;
+   
+   int day = rqst->getDiff(startdate, returndate);
+   this->credits = this->credits - day*price;
+   if (this->credits < 0) {
+      std::cout << "Insufficient credit.Current balance:  " <<this->credits << std::endl;
+      topUp();
+   }
    std::cout << "=====================================================" << std::endl;
    std::cout << "|            Request Send Successfully             |" << std::endl;
    std::cout << "=====================================================" << std::endl;
-
 }
+
 void Member::saveRequesttoFile(){
-   std::ofstream requestFile{REQUEST_FILE};
+   // std::ofstream requestFile{REQUEST_FILE};
+   std::fstream requestFile;
+   requestFile.open(REQUEST_FILE,std::ios::out);
    if (!requestFile){
       std::cerr << "Couldn't open file " << REQUEST_FILE << std::endl;
       return;
@@ -196,8 +193,8 @@ void Member::saveRequesttoFile(){
                   << requestVector[i]->renterID << "|"
                   << requestVector[i]->returnDate << "|"
                   << requestVector[i]->startDate << "|"
-                  << requestVector[i]->status << "|"
                   << requestVector[i]->bike_id << "|"
+                  << requestVector[i]->status
                   << "\n";
    }
    requestFile.close();
@@ -269,7 +266,7 @@ int Member::menuChoice2(int start, int end,std::vector<int> vect) {
    bool flag;
    std::string tempo;
    do{
-      std::cout << "Enter your bike choice: ";
+      std::cout << "Enter index: ";
       std::cin >> tempo;
       if (numValid(tempo)){   //check if the input is number
          std::cout <<"Only enter number as choice! Try again!"<<std::endl;
@@ -300,13 +297,74 @@ bool Member::numValid(std::string input){
 }
 void Member::acceptRequest(int choice2){
    int choice;
-   std::cout << "Choose action:\t1. Accept\t2. Decline\n";
+   std::cout << "Choose action:\t1. ACCEPTED\t2. DECLINEED\n";
    choice = menuChoice(1,2);
    switch(choice){
       case 1:
-         requestVector[choice2]->status = "Accepted";
+         requestVector[choice2]->status = "ACCEPTED";
          break;
       case 2:
-         requestVector[choice2]->status = "Declined";
+         requestVector[choice2]->status = "DECLINED";
+   }
+   saveRequesttoFile();
+   loadRequest();
+}
+void Member::loadHistory(){
+   requestVector.clear();    
+   std::string line;    
+   std::ifstream requestFile{HISTORY_FILE};     
+   if(!requestFile.is_open()){       
+      std::cerr << "Couldn't open 'History.txt'" << std::endl;    
+   }    
+   while (std::getline(requestFile, line)){             
+      std::vector<std::string> dataList;       
+      dataList = splitString (line, '|');
+      RentHis *history = new RentHis(dataList[0], std::stoi(dataList[1]), dataList[2],
+                                     dataList[3], dataList[4],
+                                     dataList[5]);
+      RentHisVect.push_back(history);
+      std::cout << "Load History successful" << std::endl;
+   }    
+   requestFile.close();
+   std::cout << "Load successful: " << requestVector.size() << std::endl;
+}
+void Member::viewBikeHistory(){
+   int index = 0;
+   std::cout << std::left << std::setw(10) << "Index"
+             << std::left << std::setw(15) << "HistoryID"
+             << std::left << std::setw(15) << "Price"
+             << std::left << std::setw(20) << "BikeID"
+             << std::left << std::setw(15) << "Status"
+             << std::endl;
+   for (auto &history :RentHisVect){
+      if (history->bikeID == this->bikeID) {
+         std::cout << std::left << std::setw(10) << index
+                   << std::left << std::setw(15) << history->historyID
+                   << std::left << std::setw(15) << history->price
+                   << std::left << std::setw(20) << history->bikeID
+                   << std::left << std::setw(15) << history->status
+                   << std::endl;
+         index++;
+      }
+   }
+}
+void Member::viewMemberHistory(){
+   int index = 1;
+   std::cout << std::left << std::setw(10) << "Index"
+             << std::left << std::setw(15) << "HistoryID"
+             << std::left << std::setw(15) << "Price"
+             << std::left << std::setw(20) << "BikeID"
+             << std::left << std::setw(15) << "Status"
+             << std::endl;
+   for (auto &history :RentHisVect){
+      if (history->owner_id == this->memberID){
+         std::cout << std::left << std::setw(10) <<  index
+                      << std::left << std::setw(15) << history->historyID
+                      << std::left << std::setw(15) << history->price
+                      << std::left << std::setw(20) << history->bikeID
+                      << std::left << std::setw(15) << history->status
+                      << std::endl;
+      index++;
+      }
    }
 }

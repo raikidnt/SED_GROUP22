@@ -1,4 +1,4 @@
-Bk-952|Futures   |Black   |125|2021|Manual|10|HN|9.1|8.5|description1|available|rentp
+Bk-952|Futures   |xxx   |125|2021|Manual|10|HN|9.1|8.5|description1|available|rentp
 Bk-491|Vision    |Black   |125|2019|Manual|6|HN|8.4|6.4|description2|unavailable|rentp
 Bk-993|AirBlade  |Blue    |150|2022|Manual|5|SG|7.5|6.2|description3|available|rentp
 Bk-931|Harley    |Pink    |1200|2022|Manual|8|HN|6.32|6.3|description4|available|rentp
@@ -22,3 +22,6 @@ Bk-368|bike for nhu|blue|890|3400|Manual|4|HoChiMinh|10|2.5|good condition|Avail
 Bk-141|bikeforkhoi|ewss|200|2018|Manual|6|HoChiMinh|10|8|perfect|Unavailable|0
 Bk-155|Futures 125|black|125|2020|Manual|7|HoChiMinh|10|8|perfect condition|Available|0
 Bk-539|newbike|red|223|2019|Auto|5|DaNang|10|3.5|good condition|Unavailable|0
+Bk-287|qweq|qwe|123|2019|Manual|4|HoChiMinh|10|5.6|good|Available|0
+Bk-676|qwe|qwe|333|3333|Auto|5|Hanoi|10|6|erefg|Unavailable|0
+Bk-908|www|www|444|4444|Manual|5|HoChiMinh|10|5|trg|Available|0

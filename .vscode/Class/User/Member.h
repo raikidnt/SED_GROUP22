@@ -1,10 +1,11 @@
 #ifndef MEMBER_H
 #define MEMBER_H
+#include <bits/stdc++.h>
 
 #include "User.h"
 #include "../Bike/MotorBike.h"
-#include <bits/stdc++.h>
 #include "../Request/Request.h"
+#include "../RentHistory/RentHistory.h"
 std::string LOCATIONS[3] = {"HN", "SG", "DN"};
 
 class Member : public User {
@@ -23,6 +24,7 @@ private:
    bool own_bike = false;  //default
    
    std::vector <Request*> requestVector;
+   std::vector <RentHis*> RentHisVect;
 public:
    std::string fullName;
    std::string licenseID;
@@ -52,14 +54,17 @@ public:
    std::string listBike();  //set status to available and other parameters
    std::string unlistBike();   //set status to unavailable and other parameters
 
-   void sendRequest(std::string ownerbikeID);
+   void sendRequest(std::string ownerbikeID, int price);
    void loadRequest();
+   void loadHistory();
    void viewRequest();  //view request belong to member
    void acceptRequest(int choice);
    // void declineRequest();
-   
+   int cost(std::string startday,std::string endday);
+   void viewBikeHistory();
+   void viewMemberHistory();
+
    void saveRequesttoFile();
-   void viewHistory(); //view all history rentings
    int menuChoice(int start, int end);
    int menuChoice2 (int start, int end, std::vector<int>track);
    // int searchBike(std::string bikeID);

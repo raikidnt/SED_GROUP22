@@ -1,39 +1,25 @@
-#include <iostream>
-#include <bits/stdc++.h>
-#include <../Request/Request.cpp>
-#include <RentHistory.h>
+#include "RentHistory.h"
 
-
+std::string historyIDgenerate(){
+   srand(time(NULL));
+   int num = rand() % 1001; //random number form 0-100
+   return ("H-"+std::to_string(num));
+}
 
 RentHis::RentHis(){};
-RentHis::RentHis(double price, std::string historyID, std::string bikeID, std::string renter_id) : price(price), historyID(historyID), bikeID(bikeID), renter_id(renter_id){
-
-    this -> historyID = requestID;
-    this -> renter_id = renterID;
+RentHis::RentHis(std::string i_historyID, int i_price, std::string i_bikeID,
+                 std::string i_renter_id, std::string i_owner,
+                 std::string i_status
+                //  std::string i_bikeComment, float i_bikeRating,
+                //  std::string i_memberComment, float i_memberRating
+                 )
+    : historyID(i_historyID), price(i_price), bikeID(i_bikeID),
+      renter_id(i_renter_id), owner_id(i_owner),
+      status(i_status)
+    //   bikeComment(i_bikeComment), bikeRating(i_bikeRating),
+    //   memberComment(i_memberComment), memberRating(i_memberRating)
+{
+    if (i_status  == "Renting"){    //new renting
+        i_historyID = historyIDgenerate();
+    }
 };
-
-void Request::setReturnDate(std::string returnDate){
-    this->returnDate = returnDate;
-}
-void Request::setStartDate(std::string startDate){
-    this->startDate = startDate;
-}
-
-void RentHis::setPrice(double price){
-    this -> price = price;
-}
-
-
-
-
-void totalPrice(Request& total){
-
-    RentHis* Price = new RentHis();
-    std::string startdate;
-    std::string returndate;
-
-    double totalprice = total.getDiff(startdate, returndate)* 2;
-
-    Price -> setPrice(totalprice);
-}
-

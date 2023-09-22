@@ -51,8 +51,8 @@ class System {
       //member function
       void addBike(); //add bike to system
       void rentBike(); //
-      void viewBikeHistory(); // history of bike
-      void viewRentHistory();//history of member
+      void viewHistory(); // history of bike
+      // void viewRentHistory();//history of member
       
 
       int menuChoice(int start, int end); //check for valid input (only number within range)
@@ -83,7 +83,7 @@ class System {
       
       void saveMembertoFile();
       void saveBiketoFile();
-      // void saveRequesttoFile();
+
       void saveBikeRatingtoFile();
       void saveMemberRatingtoFile();
 

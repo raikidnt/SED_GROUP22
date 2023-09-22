@@ -1,5 +1,4 @@
 #include "UI.h"
-
 #include "../Bike/MotorBike.cpp"
 #include "../User/Member.cpp"
 #include "../User/Admin.cpp"
@@ -37,6 +36,8 @@ void System::mainMenu (){
    loadMembers();
    loadBikes();
    loadAdmin();
+
+
    int choice = menuChoice(1,4);
    switch (choice){
       case 1:
@@ -61,9 +62,9 @@ void System::guestMenu(){
    std::cout << "===========================================" << std::endl;
    std::cout << "|               -Guest Menu-              |" << std::endl;
    std::cout << "===========================================" << std::endl;
-   // loadMembers();
+   loadMembers();
    loadBikes();
-   // loadAdmin();
+   loadAdmin();
    std::cout << "1. View motorbike\n";
    std::cout << "2. Sign up\n";
    std::cout << "3. Exit the program\n";
@@ -195,28 +196,28 @@ void System::memberMenu() {  //after member login successful
    std::cout << "3. View Request" << std::endl; //view upcoming requests
    std::cout << "4. View History" << std::endl; //view history of bike or member
    std::cout << "5. Logout" << std::endl;
-   // loadMembers();
-   // loadBikes();
-   // loadAdmin();
+   loadMembers();
+   loadBikes();
+   loadAdmin();
    current_member->loadRequest();   //load all reueqst belong to member
    choice = menuChoice(1,5);
    switch (choice) {
    case 1: //rent bike
       rentMenu();
+      // memberMenu();
       break;
    case 2:  
       addBike();  //add new bike to vector
+      // memberMenu();
       break;
    case 3://view request
       current_member->loadRequest();   //load all reueqst belong to member
-
       current_member->viewRequest();
+      memberMenu();
       break;
    case 4:
-      //view history of member 
-      // current_member.viewHistory();
-      //view history of own bike
-      // current_motorBikes.viewHistory();
+      viewHistory();
+      memberMenu();
       break;
    case 5: 
       //save all info and logout
@@ -311,7 +312,6 @@ void System::loadMembers(){
    }
    memberFile.close();  
    std::cout << "Member file loaded" << std::endl;
-
 }
 void System::loadAdmin(){
    std::ifstream adminFile{ADMIN_FILE};
@@ -480,7 +480,7 @@ int System::menuChoice2(int start, int end,std::vector<int> vect) {
       }
       finalChoice = std::stoi(tempo);
       for (int i = 0; i < vect.size(); i++) {
-         if (finalChoice > (vect.size() + 1) || finalChoice < 0) {
+         if (finalChoice > end || finalChoice < start) {
             std::cout << "Enter choice in the range " << start << " - " << end << " only!" << std::endl;
             flag = false;
          }
@@ -572,15 +572,15 @@ void System::guestRegister(){
    switch (subChoice) {
    case 1:
       location = LOCATIONS[0];
-      // std::cin.ignore();
+      std::cin.ignore();
       break;
    case 2:
       location = LOCATIONS[1];
-      // std::cin.ignore();
+      std::cin.ignore();
       break;
    case 3:
       location = LOCATIONS[2];
-      // std::cin.ignore();
+      std::cin.ignore();
       break;    
    }
    
@@ -631,6 +631,7 @@ void System::guestRegister(){
                                   ID_type, ID, INITIAL_CREDIT,
                                   licenseID, expDate, INITIAL_RATING,bikeID);
    memberVector.push_back(newMember);
+   saveMembertoFile();  
    std::cout << "=====================================================" << std::endl;
    std::cout << "|            Member registered successfully         |" << std::endl;
    std::cout << "=====================================================" << std::endl;
@@ -769,7 +770,6 @@ void System::saveMembertoFile(){
             else {
                memberFile << "|" << member->bikeID;
             }
-            // memberFile << "\n";
          }
          else {
             memberFile << "|" << member->bikeID;
@@ -864,7 +864,7 @@ void System::saveBikeRatingtoFile(){
       std::cerr <<"Couldnt open file " << std::endl;
    }
    for (int i = 0; i < bikeRatingVector.size(); i++) {
-      file << bikeRatingVector[i]->rateBikeID << "|"
+      file << bikeRatingVector[i]->ratebikeID << "|"
            << bikeRatingVector[i]->score << "|"
            << bikeRatingVector[i]->comment << "|"
            << "\n";
@@ -888,7 +888,7 @@ void System::saveMemberRatingtoFile(){
 
 void System::rentMenu(){
    int index = 0;
-   int order= 1;
+   int order= 0;
    std::vector<int>track;
    int choice,choice2;
    std::cout << "Motorbikes available" <<std::endl;
@@ -915,9 +915,9 @@ void System::rentMenu(){
                       << std::left << std::setw(15) << bike->rentPrice
                       << std::endl;
       order++; //for show only
+      track.push_back(index); //remember which bike at which index is show on list
       }
       index++;
-      track.push_back(index); //remember which bike at which index is show on list
    }
 
    std::cout << "Menu:  " << std::endl;
@@ -926,17 +926,24 @@ void System::rentMenu(){
    choice = menuChoice(1,2);
    switch (choice) {
    case 1:
-      std::cin.ignore();
-      choice2 = menuChoice2(1, order, track);      
+      // std::cin.ignore();
+      choice2 = menuChoice2(0,order,track);
       for (MotorBike *bk : motorBikesVector){
          if (bk->bikeID == motorBikesVector[choice2]->bikeID){
             std::cin.ignore();
-            current_member->sendRequest(bk->bikeID);
+            std::cout << "bike ID = "<< bk->bikeID << std::endl;
+            std::cout << "rent price = "<< bk->rentPrice << std::endl;
+            current_member->sendRequest(bk->bikeID, bk->rentPrice);
             current_member->saveRequesttoFile();
+            
+            for (int i = 0; i < memberVector.size(); i++) {
+               if(current_member->memberID == memberVector[i]->memberID){
+                  memberVector[i] = current_member;   //update to vector
+               }
+            }
+            saveMembertoFile();  //update to file
          }
       }
-
-      memberMenu();
       break;
    case 2:
       memberMenu();
@@ -1050,7 +1057,7 @@ void System::addBike(){
                                  description, status, duration);
    
    motorBikesVector.push_back(bike);
-
+   saveBiketoFile();
    std::cout << "=====================================================" << std::endl;
    std::cout << "|            Motorbike Added Successfully           |" << std::endl;
    std::cout << "=====================================================" << std::endl;
@@ -1158,29 +1165,21 @@ void System::rentBike(){
    // requestVector.push_back(rqst);
 }
 
-void System::viewBikeHistory(){ //view who rent the bike before
-   int index = 0;
-   std::cout << "Motorbikes History" <<std::endl;
-   std::cout << std::left << std::setw(10) << "-Index- "
-             << std::left << std::setw(15) << "-RequestID-"
-             << std::left << std::setw(15) << "-Startday-"
-             << std::left << std::setw(20) << "-Return day-"
-             << std::left << std::setw(15) << "-Duration -"
-             << std::left << std::setw(15) << "-Renter-"
-             << std::left << std::setw(15) << "-Rating-"
-             << std::left << std::setw(15) << "-Score-"
-             << std::endl;
-   // for()
-   // std::cout << std::left << std::setw(10) << index
-   //           << std::left << std::setw(10) << 
-   //           << std::left << std::setw(10) << "-Index- "
-
-   //     index++;
-   // }
+void System::viewHistory(){ //view who rent the bike before
+   std::cout << "Choose:"<< std::endl;
+   std::cout << "1. History of own bike" << std::endl;
+   std::cout << "2. History of members" << std::endl;
+   int choice = menuChoice(1,2);
+   switch (choice){
+      case 1:
+         current_member->viewBikeHistory();
+         break;
+      case 2:
+         current_member->viewMemberHistory();
+         break;
+   }
 }
-void System::viewRentHistory(){ // view bike that rent by current member
 
-}
 
 // bool isDateGood(std::string start,std::string end){
 //    std::string sdate = start.substr(0,2);

@@ -5,12 +5,12 @@ std::string BikeRatingIDgenerate();
 
 class BikeRating {
    protected:
-      std::string rateBikeID; //auto generated
+      std::string ratebikeID; //auto generated
       std::string comment;
       int score;
    public:
       BikeRating();
-      BikeRating(int score, std::string comment);
+      BikeRating(std::string comment, int score);
 
       // void RateBike();
       // void setRateBikeID(std::string rateBikeID);

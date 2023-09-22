@@ -33,7 +33,7 @@ class Request {
 
       void sentrequest(std::string i_renterID); 
       // void getTime(std::string sDate, std::string rDate);
-      bool isValid(std::string &date);
+      bool validDate(std::string &date);
       std::vector<std::string> splitDate(std::string &date, char splitChar);
 
       // void checkRequest();

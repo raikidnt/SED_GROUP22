@@ -45,7 +45,7 @@ void Request::setbikeID(std::string bike_id){
 //     this->check = check;
 // }
 
-std::vector<std::string> splitDate(std::string &date, char splitChar){
+std::vector<std::string> Request::splitDate(std::string &date, char splitChar){
     std::stringstream ss(date);
     std::vector<std::string>strarray;
     std::string val;
@@ -55,7 +55,7 @@ std::vector<std::string> splitDate(std::string &date, char splitChar){
     return strarray;
 }
 
-bool validDate(std::string &date){
+bool Request::validDate(std::string &date){
     std::vector<std::string> d = splitDate(date, '/');
     int day, month, year;
     day = std::stoi(d[0]);
@@ -78,7 +78,7 @@ bool validDate(std::string &date){
     return true;
 }
 
-int getDiff(std::string start_date, std::string return_date){
+int Request::getDiff(std::string start_date, std::string return_date){
 
     std::vector<std::string> split1 = splitDate(start_date, '/');
     std::vector<std::string> split2 = splitDate(return_date, '/');
