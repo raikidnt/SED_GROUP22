@@ -272,7 +272,7 @@ void System::loadBikes(){
       motorBikesVector.push_back(bike);
    }
    bikeFile.close();
-   // std::cout << "Bike file loaded" << std::endl;
+   std::cout << "Bike file loaded" << std::endl;
 }
 void System::loadMembers(){
    memberVector.clear();
@@ -312,6 +312,8 @@ void System::loadAdmin(){
    
    this->admin = new Admin(username, password);
    // std::cout << this->admin. << std::endl;
+   std::cout << "Admin file loaded" << std::endl;
+
    adminFile.close();
 }
 // void System::loadRequest(){    

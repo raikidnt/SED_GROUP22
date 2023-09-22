@@ -25,3 +25,4 @@ Bk-539|newbike|red|223|2019|Auto|5|DaNang|10|3.5|good condition|Unavailable|0
 Bk-287|qweq|qwe|123|2019|Manual|4|HoChiMinh|10|5.6|good|Available|0
 Bk-676|qwe|qwe|333|3333|Auto|5|Hanoi|10|6|erefg|Unavailable|0
 Bk-908|www|www|444|4444|Manual|5|HoChiMinh|10|5|trg|Available|0
+Bk-360|Futures Neo|red|125|2019|Manual|6|HoChiMinh|10|5|Perfect condition|Available|0
